@@ -32,7 +32,7 @@ export class Registro {
   showPassword = signal(false);
   showConfirmPassword = signal(false);
 
-  // estado del selector de archivos de windows: preview en vivo, archivo real y errores q meto en 3 señales
+  // estado del selector de archivos de windows preview en vivo archivo real y errores q meto en 3 señales
   imagePreview = signal<string | null>(null);
   imageFile = signal<File | null>(null);
   imageError = signal<string | null>(null);
@@ -42,7 +42,7 @@ export class Registro {
 
   nombre = new FormControl('', [Validators.required, Validators.minLength(2)]);
   apellido = new FormControl('', [Validators.required, Validators.minLength(2)]);
-  // sync validators primero (formato), async despues (chequea contra el back si ya existe)
+  // sync validators primero osea formato y async despues chequea contra el back si ya existe
   correo = new FormControl(
     '',
     [Validators.required, Validators.email],
@@ -82,7 +82,7 @@ export class Registro {
   }
 
   onFileChange(event: Event): void {
-    // reseteo errores cada vez q el user cambia el file
+    // aca reseteo errores cada vez q el user cambia el file
     this.imageError.set(null);
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -136,7 +136,7 @@ export class Registro {
         password: value.password!,
         fechaNacimiento: value.fechaNacimiento!,
         descripcion: value.descripcion!,
-        // el back arma el usuario como 'usuario'; los admin se crean en el dashboard (sprint 4)
+        // el back arma el usuario como usuario los admin se crean en el dashboard
         imagenPerfil: this.imageFile() ?? undefined
       })
       .subscribe({
@@ -151,7 +151,7 @@ export class Registro {
           }).then(() => this.router.navigate(['/login']));
         },
         error: (err) => {
-          // muestro el mensaje q tira el back ej: correo ya en uso
+          // muestro el mensaje q tira el back ej correo ya en uso
           this.loading.set(false);
           const msg = err?.error?.message ?? 'No pudimos crear tu cuenta. Intentalo de nuevo.';
           Swal.fire({

@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
   min-height: 100vh;
 }
@@ -12,7 +12,7 @@
     var(--bg-base);
 }
 
-/* ---------- top bar ---------- */
+/* top bar */
 .auth-topbar {
   display: flex;
   align-items: center;
@@ -68,7 +68,7 @@
   font-weight: 700;
 }
 
-/* ---------- stage ---------- */
+/* stage */
 .auth-stage {
   flex: 1;
   display: flex;
@@ -111,7 +111,7 @@
   line-height: 1.55;
 }
 
-/* ---------- card ---------- */
+/* card */
 .card {
   position: relative;
   background: var(--bg-surface);
@@ -130,7 +130,7 @@
   padding: 40px 44px 36px;
 }
 
-/* ---------- bloques numerados ---------- */
+/* bloques numerados */
 .block {
   padding-bottom: 28px;
   margin-bottom: 28px;
@@ -157,7 +157,7 @@
   gap: 16px 18px;
 }
 
-/* ---------- campos ---------- */
+/* campos */
 .field {
   margin-bottom: 14px;
 }
@@ -271,7 +271,7 @@
   color: var(--nintendo-red);
 }
 
-/* ---------- file upload ---------- */
+/* file upload */
 .file-row {
   display: flex;
   align-items: center;
@@ -336,7 +336,7 @@
   color: white !important;
 }
 
-/* ---------- submit ---------- */
+/* submit */
 .btn-primary {
   width: 100%;
   margin-top: 6px;
@@ -403,7 +403,7 @@
   margin-left: 4px;
 }
 
-/* ---------- responsive ---------- */
+/* responsive */
 @media (max-width: 720px) {
   .auth-topbar {
     padding: 14px 18px;

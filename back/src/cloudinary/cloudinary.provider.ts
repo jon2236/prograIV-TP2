@@ -12,7 +12,7 @@ export const CloudinaryProvider = {
     const apiKey = config.get<string>('CLOUDINARY_API_KEY');
     const apiSecret = config.get<string>('CLOUDINARY_API_SECRET');
 
-    // si falta algo, mejor q falle al arrancar y no en runtime
+    // si falta algo mejor q falle al arrancar
     if (!cloudName || !apiKey || !apiSecret) {
       throw new Error('faltan vars de cloudinary en el .env');
     }

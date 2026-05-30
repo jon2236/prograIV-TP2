@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
   min-height: 100vh;
 }
@@ -12,7 +12,7 @@
     var(--bg-base);
 }
 
-/* ---------- top bar con nav (mismo q publicaciones) ---------- */
+/* top bar con nav (mismo q publicaciones) */
 .topbar {
   display: flex;
   align-items: center;
@@ -85,7 +85,7 @@
   border-color: var(--nintendo-red);
 }
 
-/* ---------- stage ---------- */
+/* stage */
 .stage {
   flex: 1;
   display: flex;
@@ -127,7 +127,7 @@
   line-height: 1.55;
 }
 
-/* ---------- profile card ---------- */
+/* profile card */
 .profile-card {
   width: 100%;
   background: var(--bg-surface);
@@ -238,7 +238,7 @@
   color: white;
 }
 
-/* ---------- responsive ---------- */
+/* responsive */
 @media (max-width: 720px) {
   .topbar {
     padding: 14px 18px;
