@@ -1,0 +1,111 @@
+<div class="landing">
+  <!-- topbar sticky -->
+  <header class="topbar">
+    <a routerLink="/" class="brand">
+      <svg viewBox="0 0 40 40" class="brand-mark" aria-hidden="true">
+        <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
+        <circle cx="12" cy="20" r="3.5" fill="currentColor" />
+        <circle cx="28" cy="20" r="3.5" fill="currentColor" />
+        <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
+      </svg>
+      <span class="brand-name">Nintendo Connect</span>
+    </a>
+    <nav class="topbar-nav">
+      <a routerLink="/login" class="nav-link">Iniciar sesión</a>
+      <a routerLink="/registro" class="nav-cta">Crear cuenta</a>
+    </nav>
+  </header>
+
+  <!-- hero con imagen de fondo y titulo encima -->
+  <section class="hero" id="inicio">
+    <img src="lp.jpg" alt="" class="hero-bg" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Comunidad fan · 1985 → hoy</span>
+      <h1 class="hero-title">
+        <span class="red-title">Nintendo</span><br />
+        Juegos que te llevan<br />
+        a otros mundos
+      </h1>
+      <p class="hero-subtitle">
+        Una red social. Mucho más que juegos — momentos inolvidables.
+      </p>
+      <div class="hero-ctas">
+        <a routerLink="/registro" class="btn-primary">Sumate ahora</a>
+        <a routerLink="/login" class="btn-ghost">Ya tengo cuenta</a>
+      </div>
+      <div class="hero-scroll">
+        <span>El legado en sobremesa</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- intro antes del stack -->
+  <section class="intro" id="consolas">
+    <p class="intro-eyebrow">Cuatro décadas, ocho sobremesas</p>
+    <h2 class="intro-title">Las consolas que construyeron Nintendo</h2>
+    <p class="intro-text">
+      Hacé scroll y mirá cómo se apilan los recuerdos.
+    </p>
+  </section>
+
+  <!-- stack de tiles stickys -->
+  <section class="tile-stack">
+    @for (consola of consolas; track consola.id; let i = $index) {
+      <article class="tile" [class]="'tile-' + consola.id">
+        <img [src]="consola.imagen" [alt]="consola.nombre" class="tile-bg" />
+        <div class="tile-overlay"></div>
+
+        <div class="tile-content">
+          <div class="tile-header">
+            <span class="tile-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+            <span class="tile-year">{{ consola.anio }}</span>
+          </div>
+
+          <h3 class="tile-name">{{ consola.nombre }}</h3>
+          <p class="tile-tagline">{{ consola.tagline }}</p>
+
+          <div class="tile-specs">
+            <div class="spec">
+              <span class="spec-label">CPU</span>
+              <span class="spec-value">{{ consola.cpu }}</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">RAM</span>
+              <span class="spec-value">{{ consola.ram }}</span>
+            </div>
+            <div class="spec">
+              <span class="spec-label">Resolución</span>
+              <span class="spec-value">{{ consola.resolucion }}</span>
+            </div>
+            <div class="spec spec-highlight">
+              <span class="spec-label">Ventas globales</span>
+              <span class="spec-value">{{ consola.ventas }}</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    }
+  </section>
+
+  <section class="outro">
+    <p>Compartí novedades, reaccioná, comentá. La comunidad te espera.</p>
+  </section>
+
+  <!-- navegacion in page al final de todo -->
+  <nav class="navegacion">
+    <h3 class="navegacion-title">Navegación</h3>
+    <div class="navegacion-links">
+      <a (click)="scrollTo('inicio')">Inicio</a>
+      <a (click)="scrollTo('consolas')">Consolas</a>
+    </div>
+  </nav>
+
+  <!-- footer chiquito -->
+  <footer class="landing-footer">
+    <span>Nintendo Connect · Desarrollado por Jonatan Quiroga - 2026</span>
+  </footer>
+</div>

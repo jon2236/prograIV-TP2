@@ -15,7 +15,7 @@ export interface User {
 }
 
 // lo q mando al back cuando me registro (incluyo ya el file para cloudinary)
-// no mando perfil: el back lo hardcodea como 'usuario' para el registro publico
+// no mando perfil: el back lo hardcodea como usuario para el registro publico
 export interface RegisterPayload {
   nombre: string;
   apellido: string;
@@ -33,7 +33,7 @@ export interface LoginPayload {
   password: string;
 }
 
-// lo q me devuelve el back en /auth/login y /auth/registro
+// lo q me devuelve el back en auth/login y auth/registro
 export interface AuthResponse {
   user: User;
   token?: string;
