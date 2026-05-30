@@ -2,14 +2,15 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthResponse, LoginPayload, RegisterPayload } from '../models/user.model';
+import { environment } from '../../environments/environment';
 
 // mi instancia unica para toda la app, en todo caso meto una inyeccion de dependencias cuando lo necesito
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   // pido el httpclient para hacer peticiones
   private http = inject(HttpClient);
-  // url del back cambiar SOLO aca. 
-  private readonly apiUrl = 'http://localhost:3000/auth';
+  // la url base viene del environment, cambia segun dev o prod
+  private readonly apiUrl = `${environment.apiUrl}/auth`;
 
   register(payload: RegisterPayload): Observable<AuthResponse> {
     // uso formdata porq va una imagen no json
