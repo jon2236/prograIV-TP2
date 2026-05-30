@@ -18,7 +18,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   // POST /auth/registro — recibe form-data con la imagen opcional en el campo 'imagenPerfil'
-  // memoryStorage = el file queda en memoria como buffer, no toca disco (lo mandamos a cloudinary directo)
+  // memoryStorage = el file queda en memoria como buffer no toca disco lo subo a cloudinary directo
   @Post('registro')
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(FileInterceptor('imagenPerfil', { storage: memoryStorage() }))

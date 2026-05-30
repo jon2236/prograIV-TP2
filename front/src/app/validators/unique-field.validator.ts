@@ -11,7 +11,7 @@ export function uniqueFieldValidator(
   campo: 'correo' | 'nombreUsuario'
 ): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    // si esta vacio o muy corto, dejo q se ocupen los sync validators
+    // si esta vacio o muy corto dejo q se ocupen los sync validators
     if (!control.value || control.value.length < 3) return of(null);
 
     return timer(400).pipe(
@@ -21,7 +21,7 @@ export function uniqueFieldValidator(
         )
       ),
       map((res) => (res.available ? null : { notUnique: true })),
-      // si el back se cae, no rompo el form
+      // si el back se cae no rompo el form
       catchError(() => of(null))
     );
   };
