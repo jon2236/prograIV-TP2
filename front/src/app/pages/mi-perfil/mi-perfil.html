@@ -1,0 +1,54 @@
+<div class="shell">
+  <header class="topbar">
+    <a routerLink="/publicaciones" class="brand">
+      <svg viewBox="0 0 40 40" class="brand-mark" aria-hidden="true">
+        <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
+        <circle cx="12" cy="20" r="3.5" fill="currentColor" />
+        <circle cx="28" cy="20" r="3.5" fill="currentColor" />
+        <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
+      </svg>
+      <span class="brand-name">Nintendo Connect</span>
+    </a>
+
+    <nav class="nav">
+      <a routerLink="/publicaciones" routerLinkActive="active" class="nav-link">Feed</a>
+      <a routerLink="/mi-perfil" routerLinkActive="active" class="nav-link">Mi perfil</a>
+    </nav>
+
+    <a routerLink="/login" class="logout">Cerrar sesión</a>
+  </header>
+
+  <main class="stage">
+    <section class="hero">
+      <p class="eyebrow">Tu cuenta</p>
+      <h1>Mi perfil</h1>
+      <p class="subtitle">Tus datos, tu foto y tus últimas publicaciones de la comunidad.</p>
+    </section>
+
+    <section class="profile-card">
+      <div class="profile-header">
+        <div class="avatar">
+          <svg viewBox="0 0 64 64" aria-hidden="true">
+            <circle cx="32" cy="24" r="11" fill="none" stroke="currentColor" stroke-width="2.5" />
+            <path d="M12 56c0-11 9-20 20-20s20 9 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="profile-meta">
+          <p class="placeholder-eyebrow">proximo</p>
+          <h2>Aca va a ir la data</h2>
+          <p>voy a ver nombre, usuario, descripción, foto de perfil y poder editarlos.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="empty-feed">
+        <p class="empty-title">Tus últimas publicaciones</p>
+        <p class="empty-body">
+          Cuando publiques en el feed, tus 3 más recientes van a aparecer acá con sus comentarios.
+        </p>
+        <a routerLink="/publicaciones" class="btn-ghost">Ir al feed</a>
+      </div>
+    </section>
+  </main>
+</div>
