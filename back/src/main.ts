@@ -15,8 +15,9 @@ async function init(): Promise<void> {
   app.enableCors({
     origin: [
       'http://localhost:4200',
+      'https://nintendo-connect.vercel.app',
       'https://progra-iv-tp-2-cqfr.vercel.app',
-      /^https:\/\/progra-iv-tp-2.*\.vercel\.app$/
+      /\.vercel\.app$/
     ],
     credentials: true
   });
