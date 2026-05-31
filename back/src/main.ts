@@ -11,9 +11,13 @@ let initPromise: Promise<void> | null = null;
 async function init(): Promise<void> {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(server));
 
-  // cors para el front local, sumar la url de vercel del front despues
+  // cors: front local + production + cualquier preview deployment del front en vercel
   app.enableCors({
-    origin: ['http://localhost:4200'],
+    origin: [
+      'http://localhost:4200',
+      'https://progra-iv-tp-2-cqfr.vercel.app',
+      /^https:\/\/progra-iv-tp-2.*\.vercel\.app$/
+    ],
     credentials: true
   });
 
