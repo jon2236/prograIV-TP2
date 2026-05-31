@@ -5,8 +5,7 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  // GET /users/check-availability?campo=correo&valor=mario@nintendo.com
-  // lo usa el front en sus async validators del registro para chequear unicidad en vivo
+  // lo uso en el front en sus async validators del registro para chequear q sea unico en vivo
   @Get('check-availability')
   async checkAvailability(@Query('campo') campo: string, @Query('valor') valor: string) {
     // solo dejo chequear estos 2 campos

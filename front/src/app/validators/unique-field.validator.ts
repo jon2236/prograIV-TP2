@@ -4,7 +4,7 @@ import { Observable, of, timer } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
-// async validator: chequea contra el back si el correo o nombreUsuario ya esta en uso
+// async validator q chequea contra el back si el correo o nombreUsuario ya esta en uso
 // el timer(400) hace de debounce angular cancela las llamadas previas si el user sigue tipeando
 export function uniqueFieldValidator(
   http: HttpClient,
