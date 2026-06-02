@@ -42,17 +42,18 @@ export class Registro {
 
   nombre = new FormControl('', [Validators.required, Validators.minLength(2)]);
   apellido = new FormControl('', [Validators.required, Validators.minLength(2)]);
-  // sync validators primero osea formato y async despues chequea contra el back si ya existe
-  correo = new FormControl(
-    '',
-    [Validators.required, Validators.email],
-    [uniqueFieldValidator(this.http, 'correo')]
-  );
-  nombreUsuario = new FormControl(
-    '',
-    [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9_.-]+$/)],
-    [uniqueFieldValidator(this.http, 'nombreUsuario')]
-  );
+  // updateOn: 'blur' hace q los validators corran solo al perder el foco, no en cada tipeo
+  // asi el async validator pega al back UNA sola vez por campo en vez de varias
+  correo = new FormControl('', {
+    validators: [Validators.required, Validators.email],
+    asyncValidators: [uniqueFieldValidator(this.http, 'correo')],
+    updateOn: 'blur'
+  });
+  nombreUsuario = new FormControl('', {
+    validators: [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z0-9_.-]+$/)],
+    asyncValidators: [uniqueFieldValidator(this.http, 'nombreUsuario')],
+    updateOn: 'blur'
+  });
   password = new FormControl('', [Validators.required, strongPasswordValidator]);
   confirmPassword = new FormControl('', [Validators.required]);
   fechaNacimiento = new FormControl('', [Validators.required, pastDateValidator]);
