@@ -4,6 +4,7 @@ import {
   Injectable,
   UnauthorizedException
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/schemas/user.schema';
@@ -12,7 +13,10 @@ import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService
+  ) {}
 
   // registro publico: siempre crea perfil usuario
   // el endpoint del dashboard de admin preguntar al profe si tendra su propio metodo
@@ -22,7 +26,9 @@ export class AuthService {
       throw new BadRequestException('la fecha de nacimiento no puede ser futura');
     }
     const user = await this.usersService.create({ ...dto, perfil: 'usuario' }, file);
-    return { user: this.cleanUser(user) };
+    // auto login: devuelvo token asi el front no tiene q pedir login despues
+    const token = await this.generarToken(user);
+    return { user: this.cleanUser(user), token };
   }
 
   async login(dto: LoginDto) {
@@ -43,8 +49,19 @@ export class AuthService {
       throw new UnauthorizedException('credenciales invalidas');
     }
 
-    //ok, devuelvo los datos sin la pass
-    return { user: this.cleanUser(user) };
+    //ok firmo el token y devuelvo todo
+    const token = await this.generarToken(user);
+    return { user: this.cleanUser(user), token };
+  }
+
+  //payload q va dentro del jwt: sub es el id, sumo username y perfil para no tener q pegarle a mongo en cada request protegida
+  private generarToken(user: UserDocument) {
+    const payload = {
+      sub: user._id,
+      username: user.nombreUsuario,
+      perfil: user.perfil
+    };
+    return this.jwtService.signAsync(payload);
   }
 
   //saca passwordHash y __v antes de mandar al front

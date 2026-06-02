@@ -1,17 +1,24 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
+  Req,
   UploadedFile,
+  UseGuards,
   UseInterceptors
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
+import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
+import { AuthGuard, JwtPayload } from '../guards/auth.guard';
+
+type RequestConUser = Request & { user: JwtPayload };
 
 @Controller('auth')
 export class AuthController {
@@ -34,5 +41,13 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
+  }
+
+  // GET /auth/me devuelve el payload del token, probndo guard
+  // este me sirve tambien en sprint 3 lo meto en la pantalla /cargando q valida el token al inicio
+  @Get('me')
+  @UseGuards(AuthGuard)
+  me(@Req() req: RequestConUser) {
+    return req.user;
   }
 }
