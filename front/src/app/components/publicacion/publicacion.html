@@ -1,0 +1,65 @@
+@let p = publi();
+
+<article class="publi">
+  <header class="publi-head">
+    @if (p.autor.imagenPerfil) {
+      <img class="publi-avatar" [src]="p.autor.imagenPerfil" alt="" />
+    } @else {
+      <div class="publi-avatar publi-avatar-fallback">{{ inicial() }}</div>
+    }
+
+    <div class="publi-autor">
+      <span class="publi-nombre">{{ p.autor.nombre }} {{ p.autor.apellido }}</span>
+      <span class="publi-username">{{ '@' + p.autor.nombreUsuario }}</span>
+    </div>
+
+    <span class="publi-tiempo">{{ tiempoRelativo() }}</span>
+
+    @if (esMia()) {
+      <button class="publi-eliminar" type="button" (click)="eliminar.emit()" aria-label="Eliminar publicacion" title="Eliminar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 6h18"/>
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+        </svg>
+      </button>
+    }
+  </header>
+
+  <div class="publi-body">
+    <h3 class="publi-titulo">{{ p.titulo }}</h3>
+    <p class="publi-descripcion">{{ p.descripcion }}</p>
+
+    @if (p.imagenUrl) {
+      <img class="publi-imagen" [src]="p.imagenUrl" alt="" loading="lazy" />
+    }
+  </div>
+
+  <footer class="publi-foot">
+    <button
+      class="publi-accion publi-like"
+      type="button"
+      [class.activo]="p.isLiked"
+      (click)="likeToggle.emit()"
+      [attr.aria-pressed]="p.isLiked"
+    >
+      @if (p.isLiked) {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.5 12 21 12 21z"/>
+        </svg>
+      } @else {
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      }
+      <span class="publi-count">{{ p.likesCount }}</span>
+    </button>
+
+    <span class="publi-accion publi-comentarios" title="Comentarios">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      <span class="publi-count">{{ p.comentarios.length }}</span>
+    </span>
+  </footer>
+</article>

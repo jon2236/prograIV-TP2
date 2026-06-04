@@ -1,0 +1,160 @@
+/* card */
+.publi {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.publi:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+/* header: avatar + autor + tiempo + boton eliminar */
+.publi-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.publi-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--bg-elevated);
+}
+
+.publi-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text-secondary);
+  background: var(--bg-elevated);
+}
+
+.publi-autor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.publi-nombre {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.publi-username {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.publi-tiempo {
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* boton eliminar */
+.publi-eliminar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.publi-eliminar:hover {
+  background: var(--nintendo-red-soft);
+  color: var(--nintendo-red);
+}
+
+/* body */
+.publi-body {
+  margin-bottom: 14px;
+}
+
+.publi-titulo {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.publi-descripcion {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.publi-imagen {
+  display: block;
+  width: 100%;
+  margin-top: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-soft);
+  object-fit: cover;
+  max-height: 480px;
+}
+
+/* footer: like + comentarios */
+.publi-foot {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.publi-accion {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.publi-like:hover {
+  background: var(--nintendo-red-soft);
+  color: var(--nintendo-red);
+}
+
+.publi-like.activo {
+  color: var(--nintendo-red);
+}
+
+.publi-comentarios {
+  cursor: default;
+}
+
+.publi-count {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}

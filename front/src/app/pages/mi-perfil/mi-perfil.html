@@ -15,40 +15,83 @@
       <a routerLink="/mi-perfil" routerLinkActive="active" class="nav-link">Mi perfil</a>
     </nav>
 
-    <a routerLink="/login" class="logout">Cerrar sesión</a>
+    <button type="button" class="logout" (click)="logout()">Cerrar sesion</button>
   </header>
 
   <main class="stage">
     <section class="hero">
       <p class="eyebrow">Tu cuenta</p>
       <h1>Mi perfil</h1>
-      <p class="subtitle">Tus datos, tu foto y tus últimas publicaciones de la comunidad.</p>
+      <p class="subtitle">Tus datos y tus ultimas publicaciones</p>
     </section>
 
-    <section class="profile-card">
-      <div class="profile-header">
-        <div class="avatar">
-          <svg viewBox="0 0 64 64" aria-hidden="true">
-            <circle cx="32" cy="24" r="11" fill="none" stroke="currentColor" stroke-width="2.5" />
-            <path d="M12 56c0-11 9-20 20-20s20 9 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-          </svg>
-        </div>
-        <div class="profile-meta">
-          <p class="placeholder-eyebrow">proximo</p>
-          <h2>Aca va a ir la data</h2>
-          <p>voy a ver nombre, usuario, descripción, foto de perfil y poder editarlos.</p>
-        </div>
-      </div>
+    @if (user) {
+      <section class="profile-card">
+        <div class="profile-header">
+          @if (user.imagenPerfil) {
+            <img class="avatar avatar-img" [src]="user.imagenPerfil" alt="Foto de perfil" />
+          } @else {
+            <div class="avatar avatar-fallback">{{ inicial() }}</div>
+          }
 
-      <div class="divider"></div>
+          <div class="profile-meta">
+            <h2>{{ user.nombre }} {{ user.apellido }}</h2>
+            <p class="profile-username">{{ '@' + user.nombreUsuario }}</p>
+            @if (user.descripcion) {
+              <p class="profile-descripcion">{{ user.descripcion }}</p>
+            }
+          </div>
+        </div>
 
-      <div class="empty-feed">
-        <p class="empty-title">Tus últimas publicaciones</p>
-        <p class="empty-body">
-          Cuando publiques en el feed, tus 3 más recientes van a aparecer acá con sus comentarios.
-        </p>
-        <a routerLink="/publicaciones" class="btn-ghost">Ir al feed</a>
-      </div>
-    </section>
+        <div class="divider"></div>
+
+        <dl class="profile-datos">
+          <div class="dato">
+            <dt>Correo</dt>
+            <dd>{{ user.correo }}</dd>
+          </div>
+          <div class="dato">
+            <dt>Fecha de nacimiento</dt>
+            <dd>{{ fechaFormateada() }}</dd>
+          </div>
+          <div class="dato">
+            <dt>Rol</dt>
+            <dd><span class="dato-rol">{{ user.perfil }}</span></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="mis-publis">
+        <header class="mis-publis-head">
+          <h2 class="mis-publis-titulo">Mis ultimas 3 publicaciones</h2>
+          <a routerLink="/publicaciones" class="mis-publis-link">Ver todo el feed</a>
+        </header>
+
+        @if (loading()) {
+          <p class="mis-publis-loading">Cargando...</p>
+        } @else if (misPublicaciones().length === 0) {
+          <div class="empty-feed">
+            <p class="empty-title">Todavia no publicaste nada</p>
+            <p class="empty-body">
+              Cuando publiques en el feed, tus 3 mas recientes van a aparecer aca.
+            </p>
+            <a routerLink="/publicaciones" class="btn-ghost">Ir al feed</a>
+          </div>
+        } @else {
+          <div class="mis-publis-lista">
+            @for (publi of misPublicaciones(); track publi._id) {
+              <app-publicacion
+                [publi]="publi"
+                [currentUserId]="currentUserId()"
+                (likeToggle)="toggleLike(publi)"
+                (eliminar)="eliminar(publi)"
+              />
+            }
+          </div>
+        }
+      </section>
+    } @else {
+      <p class="sin-sesion">No hay sesion activa.</p>
+    }
   </main>
 </div>

@@ -15,35 +15,78 @@
       <a routerLink="/mi-perfil" routerLinkActive="active" class="nav-link">Mi perfil</a>
     </nav>
 
-    <a routerLink="/login" class="logout">Cerrar sesión</a>
+    <button type="button" class="logout" (click)="logout()">Cerrar sesion</button>
   </header>
 
   <main class="stage">
     <section class="hero">
       <p class="eyebrow">Feed de la comunidad</p>
       <h1>Publicaciones</h1>
-      <p class="subtitle">Compartí novedades, comentá y reaccioná a lo que pasa en el mejor mundo, el mundo Nintendo.</p>
+      <p class="subtitle">
+        {{ total() }} {{ total() === 1 ? 'publicacion' : 'publicaciones' }} en el mundo Nintendo
+      </p>
     </section>
 
-    <section class="placeholder-card">
-      <div class="placeholder-icon">
-        <svg viewBox="0 0 64 64" aria-hidden="true">
-          <rect x="8" y="14" width="48" height="36" rx="6" fill="none" stroke="currentColor" stroke-width="2.5" />
-          <path d="M8 24h48" stroke="currentColor" stroke-width="2.5" />
-          <circle cx="14" cy="19" r="1.5" fill="currentColor" />
-          <circle cx="20" cy="19" r="1.5" fill="currentColor" />
-          <path d="M16 36h32M16 42h22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        </svg>
+    <section class="feed-controles">
+      <div class="feed-orden" role="tablist" aria-label="Ordenar publicaciones">
+        <button
+          type="button"
+          role="tab"
+          class="orden-tab"
+          [class.activo]="orden() === 'fecha'"
+          [attr.aria-selected]="orden() === 'fecha'"
+          (click)="cambiarOrden('fecha')"
+        >
+          Mas recientes
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="orden-tab"
+          [class.activo]="orden() === 'likes'"
+          [attr.aria-selected]="orden() === 'likes'"
+          (click)="cambiarOrden('likes')"
+        >
+          Mas gustadas
+        </button>
       </div>
-      <p class="placeholder-eyebrow">prox</p>
-      <h2>aca voy a meter el feed</h2>
-      <p>
-        aca voy a ver el listado de publicaciones, filtrar dar me gusta y eliminar publis
-      </p>
-      <div class="placeholder-actions">
-        <a routerLink="/mi-perfil" class="btn-ghost">Ir a mi perfil</a>
-        <a routerLink="/login" class="btn-link">Volver al login</a>
-      </div>
+
+      <button type="button" class="feed-crear" (click)="crearPublicacion()">
+        + Crear publicacion
+      </button>
     </section>
+
+    @if (loading()) {
+      <div class="feed-estado">Cargando publicaciones...</div>
+    } @else if (publicaciones().length === 0) {
+      <div class="feed-vacio">
+        <p>Todavia no hay publicaciones.</p>
+        <p class="feed-vacio-sub">Crea la primera y empeza la conversacion.</p>
+      </div>
+    } @else {
+      <div class="feed-lista">
+        @for (publi of publicaciones(); track publi._id) {
+          <app-publicacion
+            [publi]="publi"
+            [currentUserId]="currentUserId()"
+            (likeToggle)="toggleLike(publi)"
+            (eliminar)="eliminar(publi)"
+          />
+        }
+      </div>
+
+      @if (hasMore()) {
+        <div class="feed-mas">
+          <button
+            type="button"
+            class="feed-mas-btn"
+            (click)="cargarMas()"
+            [disabled]="loadingMore()"
+          >
+            {{ loadingMore() ? 'Cargando...' : 'Cargar mas' }}
+          </button>
+        </div>
+      }
+    }
   </main>
 </div>
