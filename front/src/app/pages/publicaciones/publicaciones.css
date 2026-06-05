@@ -226,6 +226,9 @@
   padding: 28px 60px 60px;
   scrollbar-width: thin;
   scrollbar-color: var(--sw-bg-light) transparent;
+  --tile-w: 560px;
+  --tile-h: 620px;
+  --cover-h: 315px;
 }
 
 .home-carril::-webkit-scrollbar {
@@ -314,6 +317,22 @@
     align-items: stretch;
   }
 
+  /* tabs de orden separadas a las puntas en mobile */
+  .home-orden {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    background: transparent;
+    padding: 0;
+    gap: 0;
+  }
+
+  /* el activo necesita su propio fondo porq saque el del contenedor */
+  .orden-tab.activo {
+    background: var(--sw-bg-elevated);
+    box-shadow: none;
+  }
+
   .home-crear {
     width: 100%;
   }
@@ -321,5 +340,15 @@
   .home-carril {
     padding: 20px 18px 40px;
     gap: 16px;
+    /* tiles mas chicos en mobile asi entran y se ven bien en pantalla angosta */
+    --tile-w: 350px;
+    --tile-h: 430px;
+    --cover-h: 175px;
+  }
+
+  /* el boton "cargar mas" tambien debe achicarse en mobile */
+  .home-mas {
+    width: 140px;
+    height: 160px;
   }
 }
