@@ -7,65 +7,99 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(circle at top left, rgba(230, 0, 18, 0.06), transparent 55%),
-    var(--bg-base);
+  background: var(--bg-base);
 }
 
-/* top bar */
-.auth-topbar {
+/* banner top con imagen de fondo + overlay para legibilidad del texto blanco */
+.banner {
+  position: relative;
+  min-height: 280px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 18px 32px;
-  border-bottom: 1px solid var(--border-soft);
-  background: var(--bg-surface);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  justify-content: center;
+  padding: 48px 24px;
+  background-image: url('/registro-banner.avif');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  text-align: center;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--nintendo-red);
+/* overlay oscuro encima de la imagen para q el texto siempre se lea */
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-.brand-mark {
-  width: 36px;
-  height: 36px;
+.banner-content {
+  position: relative;
+  max-width: 720px;
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.brand-name {
+.banner-titulo {
+  font-size: clamp(28px, 4vw, 44px);
   font-weight: 800;
-  font-size: 1.5rem;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 12px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
 }
 
-.brand-tag {
-  font-size: 1.2rem;
-  color: var(--text-muted);
-  text-transform: lowercase;
-  letter-spacing: 0.04em;
+.banner-sub {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  opacity: 0.95;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
 }
 
-.topbar-link {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
+/* logo pin q sobresale del banner hacia el form, centrado abajo del banner */
+.banner-pin {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 4px solid var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  z-index: 2;
 }
 
-.topbar-link strong {
-  color: var(--nintendo-red);
-  margin-left: 6px;
+.banner-pin img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+/* nav debajo del banner: solo el back link a la izq */
+.auth-nav {
+  padding: 64px 32px 0;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
   font-weight: 700;
+  color: var(--text-secondary);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--nintendo-red);
 }
 
 /* stage */
@@ -73,42 +107,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
   align-items: center;
-  padding: 32px 24px 64px;
+  padding: 24px 24px 64px;
   max-width: 920px;
   width: 100%;
   margin: 0 auto;
-}
-
-.hero-title {
-  text-align: center;
-  max-width: 640px;
-}
-
-.hero-eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--nintendo-red);
-  margin: 0 0 14px;
-}
-
-.hero-headline {
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin: 0 0 12px;
-  color: var(--text-primary);
-}
-
-.hero-subtitle {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  margin: 0;
-  line-height: 1.55;
 }
 
 /* card */
@@ -405,12 +409,22 @@
 
 /* responsive */
 @media (max-width: 720px) {
-  .auth-topbar {
-    padding: 14px 18px;
+  .banner {
+    min-height: 220px;
+    padding: 36px 18px;
   }
 
-  .topbar-link {
-    display: none;
+  .banner-pin {
+    width: 68px;
+    height: 68px;
+  }
+
+  .auth-nav {
+    padding: 52px 18px 0;
+  }
+
+  .auth-stage {
+    padding: 18px 18px 48px;
   }
 
   .card-body {
