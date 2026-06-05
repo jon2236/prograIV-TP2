@@ -1,31 +1,24 @@
 <div class="auth-shell">
-  <header class="auth-topbar">
-    <div class="brand">
-      <svg viewBox="0 0 40 40" class="brand-mark" aria-hidden="true">
-        <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
-        <circle cx="12" cy="20" r="3.5" fill="currentColor" />
-        <circle cx="28" cy="20" r="3.5" fill="currentColor" />
-        <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
-      </svg>
-      <div class="brand-text">
-        <span class="brand-name">Nintendo Connect</span>
-        <span class="brand-tag">comunidad fan · ar</span>
-      </div>
-    </div>
-    <a routerLink="/login" class="topbar-link">
-      ¿Ya tenés cuenta? <strong>Iniciar sesión</strong>
-    </a>
-  </header>
-
-  <main class="auth-stage">
-    <section class="hero-title">
-      <p class="hero-eyebrow">Sumate a la comunidad</p>
-      <h1 class="hero-headline">Crear tu cuenta de jugador</h1>
-      <p class="hero-subtitle">
+  <!-- banner top con imagen de fondo, overlay oscuro y texto centrado, estilo fandom -->
+  <section class="banner">
+    <div class="banner-content">
+      <h1 class="banner-titulo">Sumate a Nintendo Connect</h1>
+      <p class="banner-sub">
         Compartí novedades, comentá publicaciones y conectá con otros fans de Nintendo.
       </p>
-    </section>
+    </div>
+    <!-- logo pin q sobresale entre el banner y el form -->
+    <div class="banner-pin">
+      <img src="zelda-logo.png" alt="Nintendo Connect" />
+    </div>
+  </section>
 
+  <!-- volver a la landing arriba a la izq, abajo del banner -->
+  <nav class="auth-nav">
+    <a routerLink="/" class="back-link">← Volver</a>
+  </nav>
+
+  <main class="auth-stage">
     <section class="card">
       <div class="card-accent"></div>
       <div class="card-body">
