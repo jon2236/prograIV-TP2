@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ import { PublicacionComponent } from '../../components/publicacion/publicacion';
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css'
 })
-export class Publicaciones implements OnInit {
+export class Publicaciones implements OnInit, OnDestroy {
   private publiService = inject(PublicacionesService);
   private auth = inject(AuthService);
   private router = inject(Router);
@@ -38,9 +38,43 @@ export class Publicaciones implements OnInit {
   user = this.auth.getUser();
   currentUserId = computed(() => this.user?._id ?? '');
 
+  // inicial del nombre del user para el avatar fallback cuando no subio foto
+  inicial = (this.user?.nombre[0] ?? '?').toUpperCase();
+
+  // hora para mostrar a la derecha del menu, refresco cada minuto
+  hora = signal(this.formatearHora(new Date()));
+  private timerHora?: ReturnType<typeof setInterval>;
+
   ngOnInit(): void {
     // arranco con primera carga
     this.cargarPrimeraPagina();
+    this.timerHora = setInterval(() => this.hora.set(this.formatearHora(new Date())), 60000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerHora) clearInterval(this.timerHora);
+  }
+
+  private formatearHora(d: Date): string {
+    const h = d.getHours().toString().padStart(2, '0');
+    const m = d.getMinutes().toString().padStart(2, '0');
+    return `${h}:${m}`;
+  }
+
+  // permite scroll horizontal con la rueda del mouse en el carril
+  // si la rueda va vertical, lo paso a scrollLeft y prevengo q scrollee la pagina
+  onWheel(event: WheelEvent): void {
+    if (event.deltaY === 0) return;
+    const carril = event.currentTarget as HTMLElement;
+    const puedeIzq = carril.scrollLeft > 0;
+    const puedeDer = carril.scrollLeft + carril.clientWidth < carril.scrollWidth - 1;
+    const yendoDer = event.deltaY > 0;
+    // solo prevengo si el carril todavia puede scrollear en esa direccion
+    // sino dejo q la pagina haga scroll vertical normal
+    if ((yendoDer && puedeDer) || (!yendoDer && puedeIzq)) {
+      event.preventDefault();
+      carril.scrollLeft += event.deltaY;
+    }
   }
 
   // cambio de orden: reset offset y refresh

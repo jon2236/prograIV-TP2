@@ -64,7 +64,7 @@ export class AuthService {
     return this.getToken() !== null;
   }
 
-  // limpia todo y se mete cuando el user cierra sesion o el token expira (sprint 3 redirect en 401)
+  // limpia todo y se mete cuando el user cierra sesion o el token expira
   logout(): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);

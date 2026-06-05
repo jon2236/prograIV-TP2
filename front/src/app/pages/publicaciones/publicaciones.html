@@ -1,70 +1,84 @@
-<div class="shell">
-  <header class="topbar">
-    <a routerLink="/publicaciones" class="brand">
-      <svg viewBox="0 0 40 40" class="brand-mark" aria-hidden="true">
+<div class="home">
+  <!-- topbar: brand a la izq + cerrar sesion a la der, color distinto al fondo para q se note -->
+  <header class="home-top">
+    <a routerLink="/publicaciones" class="home-brand">
+      <svg width="28" height="28" viewBox="0 0 40 40" class="home-brand-mark" aria-hidden="true">
         <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
         <circle cx="12" cy="20" r="3.5" fill="currentColor" />
         <circle cx="28" cy="20" r="3.5" fill="currentColor" />
         <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
       </svg>
-      <span class="brand-name">Nintendo Connect</span>
+      <span class="home-brand-name">Nintendo Connect</span>
     </a>
 
-    <nav class="nav">
-      <a routerLink="/publicaciones" routerLinkActive="active" class="nav-link">Feed</a>
-      <a routerLink="/mi-perfil" routerLinkActive="active" class="nav-link">Mi perfil</a>
-    </nav>
-
-    <button type="button" class="logout" (click)="logout()">Cerrar sesion</button>
+    <button type="button" class="home-logout" (click)="logout()">Cerrar sesion</button>
   </header>
 
-  <main class="stage">
-    <section class="hero">
-      <p class="eyebrow">Feed de la comunidad</p>
-      <h1>Publicaciones</h1>
-      <p class="subtitle">
-        {{ total() }} {{ total() === 1 ? 'publicacion' : 'publicaciones' }} en el mundo Nintendo
-      </p>
-    </section>
+  <!-- menu perfil: avatar+texto a la izq, hora a la der. saco feed porq ya estoy en el feed -->
+  <nav class="home-menu">
+    <a routerLink="/mi-perfil" class="menu-perfil">
+      <span class="menu-avatar">
+        @if (user?.imagenPerfil) {
+          <img [src]="user!.imagenPerfil" alt="" />
+        } @else {
+          <span>{{ inicial }}</span>
+        }
+      </span>
+      <span class="menu-perfil-text">Mi perfil</span>
+    </a>
+    <span class="menu-hora">{{ hora() }}</span>
+  </nav>
 
-    <section class="feed-controles">
-      <div class="feed-orden" role="tablist" aria-label="Ordenar publicaciones">
-        <button
-          type="button"
-          role="tab"
-          class="orden-tab"
-          [class.activo]="orden() === 'fecha'"
-          [attr.aria-selected]="orden() === 'fecha'"
-          (click)="cambiarOrden('fecha')"
-        >
-          Mas recientes
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="orden-tab"
-          [class.activo]="orden() === 'likes'"
-          [attr.aria-selected]="orden() === 'likes'"
-          (click)="cambiarOrden('likes')"
-        >
-          Mas gustadas
-        </button>
-      </div>
+  <!-- hero del sprint 1 -->
+  <section class="home-hero">
+    <p class="hero-eyebrow">Feed de la comunidad</p>
+    <h1 class="hero-titulo">Publicaciones</h1>
+    <p class="hero-sub">
+      Compartí novedades, comentá y reaccioná a lo que pasa en el mejor mundo, el mundo Nintendo.
+    </p>
+  </section>
 
-      <button type="button" class="feed-crear" (click)="crearPublicacion()">
-        + Crear publicacion
+  <!-- controles: orden a la izq, boton crear a la der -->
+  <section class="home-controles">
+    <div class="home-orden" role="tablist" aria-label="Ordenar publicaciones">
+      <button
+        type="button"
+        role="tab"
+        class="orden-tab"
+        [class.activo]="orden() === 'fecha'"
+        [attr.aria-selected]="orden() === 'fecha'"
+        (click)="cambiarOrden('fecha')"
+      >
+        Mas recientes
       </button>
-    </section>
+      <button
+        type="button"
+        role="tab"
+        class="orden-tab"
+        [class.activo]="orden() === 'likes'"
+        [attr.aria-selected]="orden() === 'likes'"
+        (click)="cambiarOrden('likes')"
+      >
+        Mas gustadas
+      </button>
+    </div>
 
+    <button type="button" class="home-crear" (click)="crearPublicacion()">
+      + Crear publicacion
+    </button>
+  </section>
+
+  <!-- carril horizontal: scroll con rueda mediante (wheel) handler, sin sticky -->
+  <section class="home-carril-wrap">
     @if (loading()) {
-      <div class="feed-estado">Cargando publicaciones...</div>
+      <p class="home-estado">Cargando publicaciones...</p>
     } @else if (publicaciones().length === 0) {
-      <div class="feed-vacio">
+      <div class="home-vacio">
         <p>Todavia no hay publicaciones.</p>
-        <p class="feed-vacio-sub">Crea la primera y empeza la conversacion.</p>
+        <p class="home-vacio-sub">Tocá "Crear publicacion" para empezar.</p>
       </div>
     } @else {
-      <div class="feed-lista">
+      <div class="home-carril" (wheel)="onWheel($event)">
         @for (publi of publicaciones(); track publi._id) {
           <app-publicacion
             [publi]="publi"
@@ -73,20 +87,18 @@
             (eliminar)="eliminar(publi)"
           />
         }
-      </div>
 
-      @if (hasMore()) {
-        <div class="feed-mas">
+        @if (hasMore()) {
           <button
             type="button"
-            class="feed-mas-btn"
+            class="home-mas"
             (click)="cargarMas()"
             [disabled]="loadingMore()"
           >
-            {{ loadingMore() ? 'Cargando...' : 'Cargar mas' }}
+            {{ loadingMore() ? 'Cargando...' : 'Cargar mas →' }}
           </button>
-        </div>
-      }
+        }
+      </div>
     }
-  </main>
+  </section>
 </div>
