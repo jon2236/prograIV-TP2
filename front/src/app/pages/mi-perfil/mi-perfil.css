@@ -12,7 +12,6 @@
 }
 
 /* topbar identica a la de publicaciones */
-/* TODO extraer a componente compartido en otra iteracion */
 .home-top {
   display: flex;
   align-items: center;

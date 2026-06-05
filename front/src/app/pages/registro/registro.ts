@@ -42,8 +42,7 @@ export class Registro {
 
   nombre = new FormControl('', [Validators.required, Validators.minLength(2)]);
   apellido = new FormControl('', [Validators.required, Validators.minLength(2)]);
-  // updateOn: 'blur' hace q los validators corran solo al perder el foco, no en cada tipeo
-  // asi el async validator pega al back UNA sola vez por campo en vez de varias
+  // updateOn: 'blur' hace q los validators corran solo al perder el foco
   correo = new FormControl('', {
     validators: [Validators.required, Validators.email],
     asyncValidators: [uniqueFieldValidator(this.http, 'correo')],

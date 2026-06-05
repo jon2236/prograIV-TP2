@@ -1,7 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { Publicacion } from '../../models/publicacion.model';
 
-// card reusable estilo twitter/threads, la usa la pantalla feed y mi-perfil
+// card reusable estilo twitter la uso en la pantalla feed y mi-perfil
 @Component({
   selector: 'app-publicacion',
   standalone: true,
