@@ -24,6 +24,16 @@
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
+
+  /* tema switch home para pantallas privadas */
+  --sw-bg: #2D2D2D;
+  --sw-topbar: #1A1A1A;
+  --sw-bg-elevated: #3A3A3A;
+  --sw-bg-light: #4A4A4A;
+  --sw-text: #F4F4F4;
+  --sw-text-muted: #b6b4b4;
+  --sw-tile-border: rgba(255, 255, 255, 0.08);
+  --sw-tile-radius: 6px;
 }
 
 * {

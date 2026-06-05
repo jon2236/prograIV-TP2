@@ -1,6 +1,6 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { PublicacionesService } from '../../services/publicaciones.service';
@@ -10,11 +10,11 @@ import { PublicacionComponent } from '../../components/publicacion/publicacion';
 @Component({
   selector: 'app-mi-perfil',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, PublicacionComponent],
+  imports: [CommonModule, RouterLink, PublicacionComponent],
   templateUrl: './mi-perfil.html',
   styleUrl: './mi-perfil.css'
 })
-export class MiPerfil implements OnInit {
+export class MiPerfil implements OnInit, OnDestroy {
   private auth = inject(AuthService);
   private publiService = inject(PublicacionesService);
   private router = inject(Router);
@@ -37,8 +37,23 @@ export class MiPerfil implements OnInit {
     return fecha.toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' });
   });
 
+  // hora para el menu, refresco cada minuto
+  hora = signal(this.formatearHora(new Date()));
+  private timerHora?: ReturnType<typeof setInterval>;
+
   ngOnInit(): void {
     this.cargarMisPublis();
+    this.timerHora = setInterval(() => this.hora.set(this.formatearHora(new Date())), 60000);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerHora) clearInterval(this.timerHora);
+  }
+
+  private formatearHora(d: Date): string {
+    const h = d.getHours().toString().padStart(2, '0');
+    const m = d.getMinutes().toString().padStart(2, '0');
+    return `${h}:${m}`;
   }
 
   cargarMisPublis(): void {

@@ -1,62 +1,62 @@
-<div class="shell">
-  <header class="topbar">
-    <a routerLink="/publicaciones" class="brand">
-      <svg viewBox="0 0 40 40" class="brand-mark" aria-hidden="true">
+<div class="home">
+  <!-- topbar igual a la del feed -->
+  <header class="home-top">
+    <a routerLink="/publicaciones" class="home-brand">
+      <svg width="28" height="28" viewBox="0 0 40 40" class="home-brand-mark" aria-hidden="true">
         <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
         <circle cx="12" cy="20" r="3.5" fill="currentColor" />
         <circle cx="28" cy="20" r="3.5" fill="currentColor" />
         <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
       </svg>
-      <span class="brand-name">Nintendo Connect</span>
+      <span class="home-brand-name">Nintendo Connect</span>
     </a>
 
-    <nav class="nav">
-      <a routerLink="/publicaciones" routerLinkActive="active" class="nav-link">Feed</a>
-      <a routerLink="/mi-perfil" routerLinkActive="active" class="nav-link">Mi perfil</a>
-    </nav>
-
-    <button type="button" class="logout" (click)="logout()">Cerrar sesion</button>
+    <button type="button" class="home-logout" (click)="logout()">Cerrar sesion</button>
   </header>
 
-  <main class="stage">
-    <section class="hero">
-      <p class="eyebrow">Tu cuenta</p>
-      <h1>Mi perfil</h1>
-      <p class="subtitle">Tus datos y tus ultimas publicaciones</p>
-    </section>
+  <!-- menu: avatar+feed izq (saco mi-perfil porq ya estoy ahi), hora der -->
+  <nav class="home-menu">
+    <a routerLink="/publicaciones" class="menu-perfil">
+      <span class="menu-avatar">
+        @if (user?.imagenPerfil) {
+          <img [src]="user!.imagenPerfil" alt="" />
+        } @else {
+          <span>{{ inicial() }}</span>
+        }
+      </span>
+      <span class="menu-perfil-text">Feed</span>
+    </a>
+    <span class="menu-hora">{{ hora() }}</span>
+  </nav>
 
+  <main class="contenido">
     @if (user) {
-      <section class="profile-card">
-        <div class="profile-header">
+      <section class="perfil">
+        <div class="perfil-head">
           @if (user.imagenPerfil) {
-            <img class="avatar avatar-img" [src]="user.imagenPerfil" alt="Foto de perfil" />
+            <img class="perfil-foto" [src]="user.imagenPerfil" alt="Foto de perfil" />
           } @else {
-            <div class="avatar avatar-fallback">{{ inicial() }}</div>
+            <div class="perfil-foto perfil-foto-vacia">{{ inicial() }}</div>
           }
 
-          <div class="profile-meta">
-            <h2>{{ user.nombre }} {{ user.apellido }}</h2>
-            <p class="profile-username">{{ '@' + user.nombreUsuario }}</p>
+          <div class="perfil-info">
+            <h1 class="perfil-nombre">{{ user.nombre }} {{ user.apellido }}</h1>
+            <p class="perfil-username">{{ '@' + user.nombreUsuario }}</p>
             @if (user.descripcion) {
-              <p class="profile-descripcion">{{ user.descripcion }}</p>
+              <p class="perfil-bio">{{ user.descripcion }}</p>
             }
+            <span class="perfil-rol">{{ user.perfil }}</span>
           </div>
         </div>
 
-        <div class="divider"></div>
-
-        <dl class="profile-datos">
+        <dl class="perfil-datos">
           <div class="dato">
             <dt>Correo</dt>
             <dd>{{ user.correo }}</dd>
           </div>
           <div class="dato">
-            <dt>Fecha de nacimiento</dt>
+            <dt>Cumpleaños</dt>
             <dd>{{ fechaFormateada() }}</dd>
-          </div>
-          <div class="dato">
-            <dt>Rol</dt>
-            <dd><span class="dato-rol">{{ user.perfil }}</span></dd>
           </div>
         </dl>
       </section>
@@ -64,18 +64,15 @@
       <section class="mis-publis">
         <header class="mis-publis-head">
           <h2 class="mis-publis-titulo">Mis ultimas 3 publicaciones</h2>
-          <a routerLink="/publicaciones" class="mis-publis-link">Ver todo el feed</a>
+          <a routerLink="/publicaciones" class="mis-publis-link">Ver el feed →</a>
         </header>
 
         @if (loading()) {
-          <p class="mis-publis-loading">Cargando...</p>
+          <p class="mis-publis-estado">Cargando...</p>
         } @else if (misPublicaciones().length === 0) {
-          <div class="empty-feed">
-            <p class="empty-title">Todavia no publicaste nada</p>
-            <p class="empty-body">
-              Cuando publiques en el feed, tus 3 mas recientes van a aparecer aca.
-            </p>
-            <a routerLink="/publicaciones" class="btn-ghost">Ir al feed</a>
+          <div class="mis-publis-vacio">
+            <p>Todavia no publicaste nada.</p>
+            <a routerLink="/publicaciones" class="mis-publis-cta">Ir al feed</a>
           </div>
         } @else {
           <div class="mis-publis-lista">
