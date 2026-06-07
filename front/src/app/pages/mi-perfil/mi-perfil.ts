@@ -23,7 +23,7 @@ export class MiPerfil implements OnInit, OnDestroy {
   user = this.auth.getUser();
   currentUserId = computed(() => this.user?._id ?? '');
 
-  // ultimas 3 publis del user, la consigna pide eso textual
+  // ultimas 3 publis del user
   misPublicaciones = signal<Publicacion[]>([]);
   loading = signal(false);
 
