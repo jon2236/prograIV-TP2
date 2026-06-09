@@ -14,9 +14,13 @@ export class Comentario {
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
   autor: Types.ObjectId;
 
-  // despues lo voy a usar para marcar si fue editado
+  // lo seteo en true cuando el autor edita el comentario
   @Prop({ default: false })
   modificado: boolean;
+
+  // los agrega mongo por timestamps, los declaro para ordenar por fecha tipado
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export const ComentarioSchema = SchemaFactory.createForClass(Comentario);
@@ -45,9 +49,9 @@ export class Publicacion {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'User' }], default: [] })
   likedUsers: Types.ObjectId[];
 
-  // embebidos, por ahora los devuelve vacios, despues meto las rutas para crearlos y editarlos
+  // embebidos. documentarray para tener .id() y editar comentarios puntuales
   @Prop({ type: [ComentarioSchema], default: [] })
-  comentarios: Comentario[];
+  comentarios: Types.DocumentArray<Comentario>;
 
   // baja logica
   @Prop({ default: true })
