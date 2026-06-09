@@ -10,6 +10,7 @@ import { UsersService } from '../users/users.service';
 import { UserDocument } from '../users/schemas/user.schema';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
+import { JwtPayload } from '../guards/auth.guard';
 
 @Injectable()
 export class AuthService {
@@ -52,6 +53,26 @@ export class AuthService {
     //ok firmo el token y devuelvo todo
     const token = await this.generarToken(user);
     return { user: this.cleanUser(user), token };
+  }
+
+  // POST /auth/autorizar: el guard ya valido el token, aca solo traigo los datos frescos del user
+  async autorizar(userId: string) {
+    const user = await this.usersService.findById(userId);
+    if (!user) {
+      throw new UnauthorizedException('usuario no encontrado');
+    }
+    return { user: this.cleanUser(user) };
+  }
+
+  // POST /auth/refrescar: re-firmo con la misma payload, agarra 15 min nuevos del signOptions
+  // saco solo los 3 campos, sino arrastro el iat/exp viejo y signAsync explota
+  async refrescar(payload: JwtPayload) {
+    const token = await this.jwtService.signAsync({
+      sub: payload.sub,
+      username: payload.username,
+      perfil: payload.perfil
+    });
+    return { token };
   }
 
   //payload q va dentro del jwt: sub es el id, sumo username y perfil para no tener q pegarle a mongo en cada request protegida
