@@ -20,12 +20,14 @@
 }
 
 /* cover de la publi: la mitad de arriba, tipo cover de juego */
+/* clickeable para abrir el detalle */
 .tile-cover {
   position: relative;
   height: var(--cover-h, 320px);
   background: var(--sw-bg-light);
   overflow: hidden;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .tile-cover-img {

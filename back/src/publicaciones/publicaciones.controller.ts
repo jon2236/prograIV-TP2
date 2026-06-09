@@ -50,6 +50,12 @@ export class PublicacionesController {
     return this.publicacionesService.listar(query, req.user.sub);
   }
 
+  // GET /publicaciones/:id, una sola publi para la pantalla individual
+  @Get(':id')
+  obtener(@Param('id', ParseObjectIdPipe) id: string, @Req() req: RequestConUser) {
+    return this.publicacionesService.obtener(id, req.user.sub);
+  }
+
   // DELETE /publicaciones/:id, baja logica
   // service chequea si sos dueño o admin antes de marcarla deshabilitada
   @Delete(':id')

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
+import { SessionTimerService } from '../../services/session-timer.service';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { Publicacion } from '../../models/publicacion.model';
 import { PublicacionComponent } from '../../components/publicacion/publicacion';
@@ -17,6 +18,7 @@ import { PublicacionComponent } from '../../components/publicacion/publicacion';
 export class Publicaciones implements OnInit, OnDestroy {
   private publiService = inject(PublicacionesService);
   private auth = inject(AuthService);
+  private sessionTimer = inject(SessionTimerService);
   private router = inject(Router);
 
   // datos del feed
@@ -223,8 +225,14 @@ export class Publicaciones implements OnInit, OnDestroy {
     });
   }
 
+  // abre la pantalla individual de la publi
+  abrirDetalle(publi: Publicacion): void {
+    this.router.navigate(['/publicaciones', publi._id]);
+  }
+
   // cierra sesion y manda al login
   logout(): void {
+    this.sessionTimer.detener();
     this.auth.logout();
     this.router.navigate(['/login']);
   }

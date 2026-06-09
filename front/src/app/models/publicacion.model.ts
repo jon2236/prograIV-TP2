@@ -20,6 +20,27 @@ export interface Comentario {
   updatedAt: string;
 }
 
+// los endpoints de comentarios siempre traen el autor poblado, asi no peleo con la union en el template
+export interface ComentarioConAutor {
+  _id: string;
+  texto: string;
+  autor: AutorPoblado;
+  modificado: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+// lo q devuelve el GET de comentarios paginado, mismo shape de meta q las publis
+export interface ListarComentariosResponse {
+  data: ComentarioConAutor[];
+  meta: {
+    total: number;
+    offset: number;
+    limit: number;
+    hasMore: boolean;
+  };
+}
+
 // la publi como llega del back en el GET (con likesCount e isLiked computados)
 export interface Publicacion {
   _id: string;

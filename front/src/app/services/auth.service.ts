@@ -43,6 +43,23 @@ export class AuthService {
       .pipe(tap((res) => this.guardarSesion(res)));
   }
 
+  // valida el token guardado contra el back, lo usa la pantalla cargando al inicio
+  // si el token murio el back tira 401 y el observable cae al error
+  // de paso refresco el user guardado por si cambio algo en el back
+  autorizar(): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/autorizar`, {})
+      .pipe(tap((res) => this.guardarSesion(res)));
+  }
+
+  // pide un token nuevo con 15 min mas, lo llama el modal de extender sesion
+  // pisa el token viejo en el localstorage con el q vuelve
+  refrescar(): Observable<{ token: string }> {
+    return this.http
+      .post<{ token: string }>(`${this.apiUrl}/refrescar`, {})
+      .pipe(tap((res) => localStorage.setItem(TOKEN_KEY, res.token)));
+  }
+
   // lo lee el interceptor para meterlo en el header Authorization
   getToken(): string | null {
     return localStorage.getItem(TOKEN_KEY);

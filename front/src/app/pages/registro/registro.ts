@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
+import { SessionTimerService } from '../../services/session-timer.service';
 import { strongPasswordValidator } from '../../validators/password.validator';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
 import { pastDateValidator } from '../../validators/past-date.validator';
@@ -24,6 +25,7 @@ const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 export class Registro {
   //me traigo la instancia compartida del service
   private auth = inject(AuthService);
+  private sessionTimer = inject(SessionTimerService);
   private router = inject(Router);
   // httpclient para q los async validators chequen contra el back
   private http = inject(HttpClient);
@@ -142,8 +144,9 @@ export class Registro {
       .subscribe({
         next: () => {
           // registro ok: el back ya devolvio el token y el service lo guardo en localstorage
-          // por eso mando directo al feed sin pasar por login
+          // arranco el contador de sesion y mando directo al feed sin pasar por login
           this.loading.set(false);
+          this.sessionTimer.iniciar();
           Swal.fire({
             icon: 'success',
             title: '¡Bienvenido a Nintendo Connect!',
