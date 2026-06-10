@@ -1,23 +1,23 @@
 import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { Publicacion } from '../../models/publicacion.model';
 import { PublicacionComponent } from '../../components/publicacion/publicacion';
+import { LogoutButton } from '../../components/logout-button/logout-button';
 
 @Component({
   selector: 'app-mi-perfil',
   standalone: true,
-  imports: [CommonModule, RouterLink, PublicacionComponent],
+  imports: [CommonModule, RouterLink, PublicacionComponent, LogoutButton],
   templateUrl: './mi-perfil.html',
   styleUrl: './mi-perfil.css'
 })
 export class MiPerfil implements OnInit, OnDestroy {
   private auth = inject(AuthService);
   private publiService = inject(PublicacionesService);
-  private router = inject(Router);
 
   // user lo saco del localstorage, lo guardo al login/registro
   user = this.auth.getUser();
@@ -59,7 +59,7 @@ export class MiPerfil implements OnInit, OnDestroy {
   cargarMisPublis(): void {
     if (!this.user?._id) return;
     this.loading.set(true);
-    // filtro por autor + limit 3 + orden fecha (las mas recientes)
+    // filtro por autor + limit 3 + orden fecha las mas recientes
     this.publiService
       .listar({ autor: this.user._id, limit: 3, orden: 'fecha' })
       .subscribe({
@@ -111,11 +111,6 @@ export class MiPerfil implements OnInit, OnDestroy {
       },
       error: (err) => this.errorModal(err, 'No pudimos eliminar la publicacion.')
     });
-  }
-
-  logout(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
   }
 
   private actualizarEnLista(id: string, cambios: Partial<Publicacion>): void {

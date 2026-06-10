@@ -11,10 +11,12 @@
       <span class="detalle-brand-name">Nintendo Connect</span>
     </a>
 
-    <button type="button" class="detalle-logout" (click)="logout()">Cerrar sesion</button>
+    <app-logout-button />
   </header>
 
-  <a routerLink="/publicaciones" class="detalle-volver">← Volver al feed</a>
+  <button type="button" class="ui-btn volver-btn" (click)="volver()">
+    <span>← Volver al feed</span>
+  </button>
 
   @if (loadingPubli()) {
     <p class="detalle-estado">Cargando publicacion...</p>

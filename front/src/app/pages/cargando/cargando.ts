@@ -15,6 +15,9 @@ export class Cargando implements OnInit {
   private sessionTimer = inject(SessionTimerService);
   private router = inject(Router);
 
+  // tiempo minimo q dejo el spinner asi se ve la pantalla y no pasa de largo
+  private readonly MS_SPINNER = 2000;
+
   ngOnInit(): void {
     // si ni siquiera hay token no tiene sentido preguntar al back, derecho al login
     if (!this.auth.isLoggedIn()) {
@@ -27,7 +30,8 @@ export class Cargando implements OnInit {
       next: () => {
         // sesion valida, arranco el contador de los 10 min
         this.sessionTimer.iniciar();
-        this.router.navigate(['/publicaciones']);
+        // dejo el spinner un toque antes de pasar al feed
+        setTimeout(() => this.router.navigate(['/publicaciones']), this.MS_SPINNER);
       },
       error: () => {
         this.auth.logout();

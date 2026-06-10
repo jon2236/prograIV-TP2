@@ -4,15 +4,15 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
-import { SessionTimerService } from '../../services/session-timer.service';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { ComentariosService } from '../../services/comentarios.service';
 import { ComentarioConAutor, Publicacion } from '../../models/publicacion.model';
+import { LogoutButton } from '../../components/logout-button/logout-button';
 
 @Component({
   selector: 'app-publicacion-detalle',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, LogoutButton],
   templateUrl: './publicacion-detalle.html',
   styleUrl: './publicacion-detalle.css'
 })
@@ -20,7 +20,6 @@ export class PublicacionDetalle implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private auth = inject(AuthService);
-  private sessionTimer = inject(SessionTimerService);
   private publiService = inject(PublicacionesService);
   private comentariosService = inject(ComentariosService);
 
@@ -216,10 +215,9 @@ export class PublicacionDetalle implements OnInit {
     });
   }
 
-  logout(): void {
-    this.sessionTimer.detener();
-    this.auth.logout();
-    this.router.navigate(['/login']);
+  // vuelve al feed
+  volver(): void {
+    this.router.navigate(['/publicaciones']);
   }
 
   // string tipo "hace 2h" para la fecha del comentario

@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { AuthService } from '../../services/auth.service';
-import { SessionTimerService } from '../../services/session-timer.service';
 import { strongPasswordValidator } from '../../validators/password.validator';
 
 @Component({
@@ -18,7 +17,6 @@ import { strongPasswordValidator } from '../../validators/password.validator';
 export class Login {
   // pido la instancia compartida del service
   private auth = inject(AuthService);
-  private sessionTimer = inject(SessionTimerService);
   private router = inject(Router);
 
   // signals para q la ui reaccione automatico
@@ -51,19 +49,10 @@ export class Login {
 
     // delego al service, el componente no sabe de http
     this.auth.login({ identificador: identificador!, password: password! }).subscribe({
-      next: (res) => {
-        // login ok: arranco el contador de sesion y redirijo al feed
+      next: () => {
+        // login ok: paso por la pantalla cargando q valida el token y arranca el timer
         this.loading.set(false);
-        this.sessionTimer.iniciar();
-        Swal.fire({
-          icon: 'success',
-          title: `¡Hola, ${res.user.nombreUsuario}!`,
-          text: 'Sesión iniciada correctamente.',
-          confirmButtonColor: '#E60012',
-          timer: 1600,
-          showConfirmButton: false
-        });
-        this.router.navigate(['/publicaciones']);
+        this.router.navigate(['/cargando']);
       },
       error: (err) => {
         // 401 = credenciales mal, otro = mensaje del back
