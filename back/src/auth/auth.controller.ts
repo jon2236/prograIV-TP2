@@ -50,4 +50,22 @@ export class AuthController {
   me(@Req() req: RequestConUser) {
     return req.user;
   }
+
+  // POST /auth/autorizar valida el token (el guard tira 401 si esta vencido o roto) y devuelve el user
+  // lo usa la pantalla cargando al inicio para saber si la sesion sigue viva
+  @Post('autorizar')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  autorizar(@Req() req: RequestConUser) {
+    return this.authService.autorizar(req.user.sub);
+  }
+
+  // POST /auth/refrescar devuelve un token nuevo con la misma payload y 15 min mas
+  // lo llama el front cuando el user acepta extender la sesion en el modal de los 5 min
+  @Post('refrescar')
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AuthGuard)
+  refrescar(@Req() req: RequestConUser) {
+    return this.authService.refrescar(req.user);
+  }
 }

@@ -6,11 +6,12 @@ import { AuthService } from '../../services/auth.service';
 import { PublicacionesService } from '../../services/publicaciones.service';
 import { Publicacion } from '../../models/publicacion.model';
 import { PublicacionComponent } from '../../components/publicacion/publicacion';
+import { LogoutButton } from '../../components/logout-button/logout-button';
 
 @Component({
   selector: 'app-publicaciones',
   standalone: true,
-  imports: [CommonModule, RouterLink, PublicacionComponent],
+  imports: [CommonModule, RouterLink, PublicacionComponent, LogoutButton],
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css'
 })
@@ -223,10 +224,9 @@ export class Publicaciones implements OnInit, OnDestroy {
     });
   }
 
-  // cierra sesion y manda al login
-  logout(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
+  // abre la pantalla individual de la publi
+  abrirDetalle(publi: Publicacion): void {
+    this.router.navigate(['/publicaciones', publi._id]);
   }
 
   // helper: actualiza una publi del array sin re-renderizar todo

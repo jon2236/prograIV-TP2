@@ -100,6 +100,24 @@ export class PublicacionesService {
     };
   }
 
+  // GET /publicaciones/:id, una sola publi para la pantalla individual
+  // saco los comentarios xq esos van por el endpoint paginado aparte, sino mando todo el array al pedo
+  async obtener(id: string, currentUserId: string) {
+    const publi = await this.publiModel
+      .findOne({ _id: id, habilitado: true })
+      .select('-comentarios')
+      .populate('autor', 'nombre apellido nombreUsuario imagenPerfil')
+      .lean();
+    if (!publi) throw new NotFoundException('publicacion no encontrada');
+
+    // mismo shape q los items de la lista asi el front reusa el mismo modelo
+    return {
+      ...publi,
+      likesCount: publi.likedUsers.length,
+      isLiked: publi.likedUsers.some((u) => u.toString() === currentUserId)
+    };
+  }
+
   // DELETE /publicaciones/:id
   // baja logica: marca habilitado=false no borro el doc solo lo permite si sos dueño o admin
   async eliminar(

@@ -49,18 +49,10 @@ export class Login {
 
     // delego al service, el componente no sabe de http
     this.auth.login({ identificador: identificador!, password: password! }).subscribe({
-      next: (res) => {
-        // login ok: modal de exito y redirijo al feed
+      next: () => {
+        // login ok: paso por la pantalla cargando q valida el token y arranca el timer
         this.loading.set(false);
-        Swal.fire({
-          icon: 'success',
-          title: `¡Hola, ${res.user.nombreUsuario}!`,
-          text: 'Sesión iniciada correctamente.',
-          confirmButtonColor: '#E60012',
-          timer: 1600,
-          showConfirmButton: false
-        });
-        this.router.navigate(['/publicaciones']);
+        this.router.navigate(['/cargando']);
       },
       error: (err) => {
         // 401 = credenciales mal, otro = mensaje del back

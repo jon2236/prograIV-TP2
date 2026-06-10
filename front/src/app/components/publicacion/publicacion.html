@@ -1,7 +1,7 @@
 @let p = publi();
 
 <article class="tile" [class.tile-mia]="esMia()">
-  <div class="tile-cover">
+  <div class="tile-cover" (click)="abrir.emit()" title="Ver publicacion">
     @if (p.imagenUrl) {
       <img class="tile-cover-img" [src]="p.imagenUrl" alt="" loading="lazy" />
     } @else {
@@ -11,7 +11,7 @@
     }
 
     @if (esMia()) {
-      <button class="tile-eliminar" type="button" (click)="eliminar.emit()" title="Eliminar">
+      <button class="tile-eliminar" type="button" (click)="$event.stopPropagation(); eliminar.emit()" title="Eliminar">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M18 6L6 18M6 6l12 12"/>
         </svg>

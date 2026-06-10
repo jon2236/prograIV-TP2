@@ -1,0 +1,43 @@
+.cargando {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sw-bg);
+}
+
+.cargando-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* spinner: anillo gris con un cacho rojo nintendo q gira */
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 5px solid var(--sw-bg-light);
+  border-top-color: var(--nintendo-red);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cargando-texto {
+  margin: 0;
+  color: var(--sw-text);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.cargando-sub {
+  color: var(--sw-text-muted);
+  font-size: 0.85rem;
+}

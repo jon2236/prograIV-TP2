@@ -16,6 +16,8 @@ export class PublicacionComponent {
   // el padre los suscribe y dispara http
   likeToggle = output<void>();
   eliminar = output<void>();
+  // abrir el detalle, lo emito al clickear el cover, el padre navega
+  abrir = output<void>();
 
   // computed asi esto reacciona automatico si cambia el input
   esMia = computed(() => this.publi().autor._id === this.currentUserId());

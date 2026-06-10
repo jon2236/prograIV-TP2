@@ -41,23 +41,6 @@
   letter-spacing: -0.01em;
 }
 
-.home-logout {
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--sw-text-muted);
-  background: transparent;
-  padding: 7px 14px;
-  border: 1px solid var(--sw-bg-light);
-  border-radius: 4px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.home-logout:hover {
-  border-color: var(--nintendo-red);
-  color: var(--nintendo-red);
-}
 
 /* menu debajo del topbar: avatar+texto izq, hora der */
 .home-menu {

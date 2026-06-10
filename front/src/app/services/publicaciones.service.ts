@@ -29,6 +29,11 @@ export class PublicacionesService {
     return this.http.get<ListarPublicacionesResponse>(this.apiUrl, { params });
   }
 
+  // get /publicaciones/:id, una sola publi para la pantalla individual
+  obtener(id: string): Observable<Publicacion> {
+    return this.http.get<Publicacion>(`${this.apiUrl}/${id}`);
+  }
+
   // post /publicaciones, formdata porq va imagen opcional
   crear(payload: CrearPublicacionPayload): Observable<Publicacion> {
     const formData = new FormData();

@@ -4,12 +4,13 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { errorInterceptor } from './interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    // aca habilito httpclient + el interceptor q mete el bearer en cada request
-    provideHttpClient(withInterceptors([authInterceptor]))
+    // bearer primero (mete el token saliente), error despues (escucha el 401 entrante)
+    provideHttpClient(withInterceptors([authInterceptor, errorInterceptor]))
   ]
 };

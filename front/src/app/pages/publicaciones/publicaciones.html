@@ -11,7 +11,7 @@
       <span class="home-brand-name">Nintendo Connect</span>
     </a>
 
-    <button type="button" class="home-logout" (click)="logout()">Cerrar sesion</button>
+    <app-logout-button />
   </header>
 
   <!-- menu perfil: avatar+texto a la izq, hora a la der. saco feed porq ya estoy en el feed -->
@@ -63,8 +63,10 @@
       </button>
     </div>
 
-    <button type="button" class="home-crear" (click)="crearPublicacion()">
-      + Crear publicacion
+    <button type="button" class="btn-glitch-1" (click)="crearPublicacion()">
+      <span class="text">Crear publicacion</span>
+      <span class="text-decoration"> _</span>
+      <span class="decoration">⇒</span>
     </button>
   </section>
 
@@ -85,6 +87,7 @@
             [currentUserId]="currentUserId()"
             (likeToggle)="toggleLike(publi)"
             (eliminar)="eliminar(publi)"
+            (abrir)="abrirDetalle(publi)"
           />
         }
 

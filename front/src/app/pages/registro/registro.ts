@@ -142,17 +142,9 @@ export class Registro {
       .subscribe({
         next: () => {
           // registro ok: el back ya devolvio el token y el service lo guardo en localstorage
-          // por eso mando directo al feed sin pasar por login
+          // paso por cargando q valida el token y arranca el timer, igual q el login
           this.loading.set(false);
-          Swal.fire({
-            icon: 'success',
-            title: '¡Bienvenido a Nintendo Connect!',
-            text: 'Cuenta creada y sesion iniciada.',
-            confirmButtonColor: '#E60012',
-            timer: 1600,
-            showConfirmButton: false
-          });
-          this.router.navigate(['/publicaciones']);
+          this.router.navigate(['/cargando']);
         },
         error: (err) => {
           // muestro el mensaje q tira el back ej correo ya en uso

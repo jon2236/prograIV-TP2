@@ -9,6 +9,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/landing/landing').then((m) => m.Landing)
   },
   {
+    // pantalla inicial q valida el token contra autorizar y redirige
+    path: 'cargando',
+    loadComponent: () => import('./pages/cargando/cargando').then((m) => m.Cargando)
+  },
+  {
     path: 'login',
     loadComponent: () => import('./pages/login/login').then((m) => m.Login)
   },
@@ -21,6 +26,13 @@ export const routes: Routes = [
     path: 'publicaciones',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/publicaciones/publicaciones').then((m) => m.Publicaciones)
+  },
+  {
+    // pantalla individual de una publi con sus comentarios
+    path: 'publicaciones/:id',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/publicacion-detalle/publicacion-detalle').then((m) => m.PublicacionDetalle)
   },
   {
     path: 'mi-perfil',

@@ -1,0 +1,158 @@
+<div class="detalle">
+  <!-- topbar igual q el feed para mantener la linea visual -->
+  <header class="detalle-top">
+    <a routerLink="/publicaciones" class="detalle-brand">
+      <svg width="28" height="28" viewBox="0 0 40 40" class="detalle-brand-mark" aria-hidden="true">
+        <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
+        <circle cx="12" cy="20" r="3.5" fill="currentColor" />
+        <circle cx="28" cy="20" r="3.5" fill="currentColor" />
+        <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
+      </svg>
+      <span class="detalle-brand-name">Nintendo Connect</span>
+    </a>
+
+    <app-logout-button />
+  </header>
+
+  <button type="button" class="ui-btn volver-btn" (click)="volver()">
+    <span>← Volver al feed</span>
+  </button>
+
+  @if (loadingPubli()) {
+    <p class="detalle-estado">Cargando publicacion...</p>
+  } @else if (publi(); as p) {
+    <!-- hero: la publi completa, sin recortar como en el tile del feed -->
+    <article class="publi-hero">
+      @if (p.imagenUrl) {
+        <div class="publi-cover">
+          <img [src]="p.imagenUrl" alt="" />
+        </div>
+      }
+
+      <div class="publi-cuerpo">
+        <div class="publi-autor">
+          @if (p.autor.imagenPerfil) {
+            <img class="publi-avatar" [src]="p.autor.imagenPerfil" alt="" />
+          } @else {
+            <div class="publi-avatar publi-avatar-vacio">{{ p.autor.nombre.charAt(0).toUpperCase() }}</div>
+          }
+          <div class="publi-autor-info">
+            <span class="publi-nombre">{{ p.autor.nombre }} {{ p.autor.apellido }}</span>
+            <span class="publi-username">{{ '@' + p.autor.nombreUsuario }}</span>
+          </div>
+
+          @if (p.autor._id === currentUserId()) {
+            <button type="button" class="publi-eliminar" (click)="eliminarPubli()">Eliminar</button>
+          }
+        </div>
+
+        <h1 class="publi-titulo">{{ p.titulo }}</h1>
+        <p class="publi-descripcion">{{ p.descripcion }}</p>
+
+        <footer class="publi-pie">
+          <button
+            type="button"
+            class="publi-like"
+            [class.activo]="p.isLiked"
+            (click)="toggleLike()"
+            [attr.aria-pressed]="p.isLiked"
+          >
+            @if (p.isLiked) {
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 3.5 1 5 3 1.5-2 3-3 5-3 4 0 6.5 4 4.5 8C19 16.5 12 21 12 21z"/>
+              </svg>
+            } @else {
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+            }
+            <span>{{ p.likesCount }}</span>
+          </button>
+
+          <span class="publi-fecha">{{ tiempoRelativo(p.createdAt) }}</span>
+        </footer>
+      </div>
+    </article>
+
+    <!-- seccion comentarios -->
+    <section class="coments">
+      <h2 class="coments-titulo">Comentarios <span class="coments-total">{{ total() }}</span></h2>
+
+      <!-- form para escribir uno nuevo -->
+      <div class="coment-form">
+        <textarea
+          class="coment-input"
+          [formControl]="texto"
+          placeholder="Escribi un comentario..."
+          maxlength="500"
+          rows="3"
+        ></textarea>
+        <div class="coment-form-pie">
+          <span class="coment-contador">{{ (texto.value?.length ?? 0) }}/500</span>
+          <button
+            type="button"
+            class="coment-enviar"
+            (click)="enviarComentario()"
+            [disabled]="texto.invalid || enviando()"
+          >
+            {{ enviando() ? 'Enviando...' : 'Comentar' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- lista -->
+      @if (loadingComentarios()) {
+        <p class="detalle-estado">Cargando comentarios...</p>
+      } @else if (comentarios().length === 0) {
+        <p class="coments-vacio">Todavia no hay comentarios. Se el primero!</p>
+      } @else {
+        <ul class="coment-lista">
+          @for (c of comentarios(); track c._id) {
+            <li class="coment">
+              @if (c.autor.imagenPerfil) {
+                <img class="coment-avatar" [src]="c.autor.imagenPerfil" alt="" />
+              } @else {
+                <div class="coment-avatar coment-avatar-vacio">{{ inicialDe(c) }}</div>
+              }
+
+              <div class="coment-body">
+                <div class="coment-head">
+                  <span class="coment-user">{{ '@' + c.autor.nombreUsuario }}</span>
+                  <span class="coment-fecha">{{ tiempoRelativo(c.createdAt) }}</span>
+                  @if (c.modificado) {
+                    <span class="coment-editado">(editado)</span>
+                  }
+                </div>
+
+                @if (editandoId() === c._id) {
+                  <!-- modo edicion inline -->
+                  <textarea
+                    class="coment-input coment-input-edit"
+                    [formControl]="editTexto"
+                    maxlength="500"
+                    rows="2"
+                  ></textarea>
+                  <div class="coment-edit-acciones">
+                    <button type="button" class="coment-guardar" (click)="guardarEdicion(c)" [disabled]="editTexto.invalid">Guardar</button>
+                    <button type="button" class="coment-cancelar" (click)="cancelarEdicion()">Cancelar</button>
+                  </div>
+                } @else {
+                  <p class="coment-texto">{{ c.texto }}</p>
+                  @if (esMio(c)) {
+                    <button type="button" class="coment-editar" (click)="empezarEdicion(c)">Editar</button>
+                  }
+                }
+              </div>
+            </li>
+          }
+        </ul>
+
+        @if (hasMore()) {
+          <button type="button" class="coments-mas" (click)="cargarMas()" [disabled]="loadingMore()">
+            {{ loadingMore() ? 'Cargando...' : 'Cargar mas comentarios' }}
+          </button>
+        }
+      }
+    </section>
+  }
+</div>
