@@ -1,7 +1,9 @@
 .detalle {
   min-height: 100vh;
-  background: #ffffff;
-background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(0, 4, 5, 1) 100%);
+  background-image: url('/0oQkS7c.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   color: var(--sw-text);
   padding-bottom: 60px;
 }
@@ -201,7 +203,7 @@ background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(0, 4, 5, 1) 
 
 .detalle-estado {
   text-align: center;
-  color: var(--sw-text-muted);
+  color: var(--text-primary);
   padding: 40px 0;
 }
 
@@ -361,6 +363,7 @@ background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(0, 4, 5, 1) 
   display: flex;
   align-items: center;
   gap: 10px;
+  color:#B8000F;
 }
 
 .coments-total {
@@ -434,7 +437,7 @@ background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(0, 4, 5, 1) 
 }
 
 .coments-vacio {
-  color: var(--sw-text-muted);
+  color:#D8D8D8;
   text-align: center;
   padding: 24px 0;
 }
