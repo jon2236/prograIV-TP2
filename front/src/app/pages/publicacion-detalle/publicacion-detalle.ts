@@ -45,6 +45,8 @@ export class PublicacionDetalle implements OnInit {
   // user logueado para saber q comentarios son propios y poder editarlos
   private user = this.auth.getUser();
   currentUserId = computed(() => this.user?._id ?? '');
+  // admin puede borrar la publi aunque no sea suya
+  esAdmin = this.user?.perfil === 'administrador';
   inicial = (this.user?.nombre[0] ?? '?').toUpperCase();
 
   // form para escribir un comentario nuevo

@@ -6,6 +6,8 @@ import { PublicacionesController } from './publicaciones.controller';
 import { PublicacionesService } from './publicaciones.service';
 import { ComentariosController } from './comentarios.controller';
 import { ComentariosService } from './comentarios.service';
+import { EstadisticasController } from './estadisticas.controller';
+import { EstadisticasService } from './estadisticas.service';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { ComentariosService } from './comentarios.service';
     // cloudinarymodule exporta cloudinaryservice para subir las imagenes de las publis
     CloudinaryModule
   ],
-  controllers: [PublicacionesController, ComentariosController],
-  providers: [PublicacionesService, ComentariosService]
+  controllers: [PublicacionesController, ComentariosController, EstadisticasController],
+  providers: [PublicacionesService, ComentariosService, EstadisticasService]
 })
 export class PublicacionesModule {}

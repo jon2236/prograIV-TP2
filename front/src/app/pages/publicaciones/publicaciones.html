@@ -85,6 +85,7 @@
           <app-publicacion
             [publi]="publi"
             [currentUserId]="currentUserId()"
+            [esAdmin]="esAdmin"
             (likeToggle)="toggleLike(publi)"
             (eliminar)="eliminar(publi)"
             (abrir)="abrirDetalle(publi)"

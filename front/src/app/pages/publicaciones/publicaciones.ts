@@ -38,6 +38,8 @@ export class Publicaciones implements OnInit, OnDestroy {
   // user logueado, lo necesita el componente publicacion para saber cual es propia
   user = this.auth.getUser();
   currentUserId = computed(() => this.user?._id ?? '');
+  // si es admin le habilito el boton eliminar en cualquier publi
+  esAdmin = this.user?.perfil === 'administrador';
 
   // inicial del nombre del user para el avatar fallback cuando no subio foto
   inicial = (this.user?.nombre[0] ?? '?').toUpperCase();
