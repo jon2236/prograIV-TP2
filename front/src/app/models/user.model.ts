@@ -12,6 +12,21 @@ export interface User {
   imagenPerfil?: string;
   imagenPerfilPublicId?: string;
   perfil: Perfil;
+  // esto lo uso en el dashboard de admin para mostrar el estado y alternar alta/baja
+  habilitado?: boolean;
+}
+
+// lo q mando al back para crear un usuario desde el dashboard admin (incluye perfil elegible)
+export interface CrearUsuarioPayload {
+  nombre: string;
+  apellido: string;
+  correo: string;
+  nombreUsuario: string;
+  password: string;
+  fechaNacimiento: string;
+  descripcion: string;
+  perfil: Perfil;
+  imagenPerfil?: File;
 }
 
 // lo q mando al back cuando me registro (incluyo ya el file para cloudinary)

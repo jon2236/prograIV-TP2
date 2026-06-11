@@ -1,4 +1,9 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -40,8 +45,46 @@ export class UsersService {
     return this.userModel.findOne({ [campo]: valor }).exec();
   }
 
+  // listado completo para el dashboard admin, sin la pass ordenado por mas nuevo primero
+  findAll(): Promise<UserDocument[]> {
+    return this.userModel.find().select('-passwordHash -__v').sort({ createdAt: -1 }).exec();
+  }
+
+  // baja logica: el user deshabilitado no puede loguear (lo corta auth.service)
+  async deshabilitar(id: string): Promise<UserDocument> {
+    const user = await this.userModel
+      .findByIdAndUpdate(id, { habilitado: false }, { new: true })
+      .exec();
+    if (!user) {
+      throw new NotFoundException('usuario no encontrado');
+    }
+    return user;
+  }
+
+  // alta logica: lo vuelve a habilitar
+  async habilitar(id: string): Promise<UserDocument> {
+    const user = await this.userModel
+      .findByIdAndUpdate(id, { habilitado: true }, { new: true })
+      .exec();
+    if (!user) {
+      throw new NotFoundException('usuario no encontrado');
+    }
+    return user;
+  }
+
+  // saca passwordHash y __v antes de mandar el user al front
+  limpiar(user: UserDocument) {
+    const { passwordHash, __v, ...safe } = user.toObject();
+    return safe;
+  }
+
   //aca creo el usuario hasheo la pass y opcional subo la imagen a cloudinary
   async create(input: CreateUserInput, file?: Express.Multer.File): Promise<UserDocument> {
+    // la fecha tiene q ser pasada, el dto ya valido q sea una fecha valida
+    if (new Date(input.fechaNacimiento) >= new Date()) {
+      throw new BadRequestException('la fecha de nacimiento no puede ser futura');
+    }
+
     const passwordHash = await bcrypt.hash(input.password, 10);
 
     let imagenPerfil: string | undefined;

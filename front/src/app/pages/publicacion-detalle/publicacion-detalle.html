@@ -41,7 +41,7 @@
             <span class="publi-username">{{ '@' + p.autor.nombreUsuario }}</span>
           </div>
 
-          @if (p.autor._id === currentUserId()) {
+          @if (p.autor._id === currentUserId() || esAdmin) {
             <button type="button" class="publi-eliminar" (click)="eliminarPubli()">Eliminar</button>
           }
         </div>

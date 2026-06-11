@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-  UnauthorizedException
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
@@ -19,13 +14,9 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  // registro publico: siempre crea perfil usuario
-  // el endpoint del dashboard de admin preguntar al profe si tendra su propio metodo
+  // registro publico: siempre crea perfil usuario, el alta de admin va por users.controller
   async registro(dto: CreateUserDto, file?: Express.Multer.File) {
-    // el dto valida q sea fecha valida; aca valido q sea pasada
-    if (new Date(dto.fechaNacimiento) >= new Date()) {
-      throw new BadRequestException('la fecha de nacimiento no puede ser futura');
-    }
+    // fuerzo perfil usuario asi nadie se autoasciende a admin desde el registro publico
     const user = await this.usersService.create({ ...dto, perfil: 'usuario' }, file);
     // auto login: devuelvo token asi el front no tiene q pedir login despues
     const token = await this.generarToken(user);
@@ -85,10 +76,8 @@ export class AuthService {
     return this.jwtService.signAsync(payload);
   }
 
-  //saca passwordHash y __v antes de mandar al front
+  //saca passwordHash y __v, reuso el limpiar de users service asi no duplico
   private cleanUser(user: UserDocument) {
-    const obj = user.toObject();
-    const { passwordHash, __v, ...safe } = obj;
-    return safe;
+    return this.usersService.limpiar(user);
   }
 }

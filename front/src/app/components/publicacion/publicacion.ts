@@ -12,6 +12,8 @@ export class PublicacionComponent {
   // inputs requeridos: la publi y el id del logueado (para saber si mostrar el boton eliminar)
   publi = input.required<Publicacion>();
   currentUserId = input.required<string>();
+  // si el logueado es admin puede borrar cualquier publi, no solo las propias
+  esAdmin = input(false);
 
   // el padre los suscribe y dispara http
   likeToggle = output<void>();
@@ -21,6 +23,9 @@ export class PublicacionComponent {
 
   // computed asi esto reacciona automatico si cambia el input
   esMia = computed(() => this.publi().autor._id === this.currentUserId());
+
+  // muestro el boton eliminar si es mia o si soy admin
+  puedeEliminar = computed(() => this.esMia() || this.esAdmin());
 
   // primera letra del nombre para el avatar fallback cuando no hay foto
   inicial = computed(() => (this.publi().autor.nombre[0] ?? '?').toUpperCase());

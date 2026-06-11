@@ -1,7 +1,9 @@
 import {
   IsDateString,
   IsEmail,
+  IsIn,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -43,4 +45,9 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'La descripcion es obligatoria' })
   @MaxLength(200, { message: 'La descripcion no puede tener mas de 200 caracteres' })
   descripcion: string;
+
+  // opcional: solo lo manda el alta del dashboard admin, el registro publico lo ignora y hardcodea usuario
+  @IsOptional()
+  @IsIn(['usuario', 'administrador'], { message: 'El perfil no es valido' })
+  perfil?: 'usuario' | 'administrador';
 }
