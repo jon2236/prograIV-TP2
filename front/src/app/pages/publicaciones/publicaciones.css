@@ -326,7 +326,7 @@
 /* boton cargar mas al final del carril */
 .home-mas {
   width: 200px;
-  height: 600px;
+  height: 520px;
   background: transparent;
   border: 2px dashed var(--sw-tile-border);
   border-radius: var(--sw-tile-radius);
