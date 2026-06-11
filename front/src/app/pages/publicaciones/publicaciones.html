@@ -1,5 +1,5 @@
 <div class="home">
-  <!-- topbar: brand a la izq + cerrar sesion a la der, color distinto al fondo para q se note -->
+  <!-- topbar -->
   <header class="home-top">
     <a routerLink="/publicaciones" class="home-brand">
       <svg width="28" height="28" viewBox="0 0 40 40" class="home-brand-mark" aria-hidden="true">
@@ -14,22 +14,28 @@
     <app-logout-button />
   </header>
 
-  <!-- menu perfil: avatar+texto a la izq, hora a la der. saco feed porq ya estoy en el feed -->
+  <!-- menu perfil: avatar+texto a la izq, hora a la der-->
   <nav class="home-menu">
-    <a routerLink="/mi-perfil" class="menu-perfil">
-      <span class="menu-avatar">
-        @if (user?.imagenPerfil) {
-          <img [src]="user!.imagenPerfil" alt="" />
-        } @else {
-          <span>{{ inicial }}</span>
-        }
-      </span>
-      <span class="menu-perfil-text">Mi perfil</span>
-    </a>
+    <div class="menu-left">
+      <a routerLink="/mi-perfil" class="menu-perfil">
+        <span class="menu-avatar">
+          @if (user?.imagenPerfil) {
+            <img [src]="user!.imagenPerfil" alt="" />
+          } @else {
+            <span>{{ inicial }}</span>
+          }
+        </span>
+        <span class="menu-perfil-text">Mi perfil</span>
+      </a>
+      <!-- link al dashboard solo visible para admins -->
+      @if (esAdmin) {
+        <a routerLink="/dashboard/usuarios" class="menu-dashboard">Dashboard</a>
+      }
+    </div>
     <span class="menu-hora">{{ hora() }}</span>
   </nav>
 
-  <!-- hero del sprint 1 -->
+  <!-- hero-->
   <section class="home-hero">
     <p class="hero-eyebrow">Feed de la comunidad</p>
     <h1 class="hero-titulo">Publicaciones</h1>
@@ -70,7 +76,7 @@
     </button>
   </section>
 
-  <!-- carril horizontal: scroll con rueda mediante (wheel) handler, sin sticky -->
+  <!-- carril horizontal: scroll con rueda -->
   <section class="home-carril-wrap">
     @if (loading()) {
       <p class="home-estado">Cargando publicaciones...</p>
@@ -106,7 +112,7 @@
     }
   </section>
 
-  <!-- footer al pie, imagen centrada a su tamaño real -->
+  <!-- footer-->
   <footer class="home-footer">
     <img src="footer_img.png" alt="" class="home-footer-img" />
   </footer>

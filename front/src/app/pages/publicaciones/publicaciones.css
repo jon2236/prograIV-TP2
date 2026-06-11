@@ -51,6 +51,12 @@
   border-bottom: 1px solid var(--sw-tile-border);
 }
 
+.menu-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
 .menu-perfil {
   display: inline-flex;
   align-items: center;
@@ -60,6 +66,25 @@
   color: var(--sw-text);
   text-decoration: none;
   transition: background 0.15s ease;
+}
+
+/* link al dashboard solo admin*/
+.menu-dashboard {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--sw-text);
+  text-decoration: none;
+  border: 2px solid var(--nintendo-red);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.menu-dashboard:hover {
+  background: var(--nintendo-red);
+  color: #fff;
 }
 
 .menu-perfil:hover {
@@ -88,7 +113,7 @@
 }
 
 .menu-perfil-text {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -298,7 +323,7 @@
   flex-shrink: 0;
 }
 
-/* boton "cargar mas" al final del carril */
+/* boton cargar mas al final del carril */
 .home-mas {
   width: 200px;
   height: 600px;
@@ -346,7 +371,7 @@
   font-size: 13px;
 }
 
-/* footer al pie: imagen centrada a su tamaño real, sin estirar */
+/* footer imagen */
 .home-footer {
   display: flex;
   justify-content: center;
@@ -382,7 +407,7 @@
     align-items: stretch;
   }
 
-  /* tabs de orden separadas a las puntas en mobile */
+  /* tabs de orden */
   .home-orden {
     display: flex;
     width: 100%;
@@ -405,7 +430,7 @@
   .home-carril {
     padding: 20px 18px 40px;
     gap: 16px;
-    /* tiles mas chicos en mobile asi entran y se ven bien en pantalla angosta */
+    /* tiles mas chicos en mobile*/
     --tile-w: 300px;
     --tile-h: 530px;
     --cover-h: 275px;

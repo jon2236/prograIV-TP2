@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   // landing publica como home
@@ -38,6 +39,13 @@ export const routes: Routes = [
     path: 'mi-perfil',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/mi-perfil/mi-perfil').then((m) => m.MiPerfil)
+  },
+  {
+    // dashboard admin: authguard valida sesion + adminguard valida q el perfil sea administrador
+    path: 'dashboard/usuarios',
+    canActivate: [authGuard, adminGuard],
+    loadComponent: () =>
+      import('./pages/dashboard-usuarios/dashboard-usuarios').then((m) => m.DashboardUsuarios)
   },
   { path: '**', redirectTo: '' }
 ];
