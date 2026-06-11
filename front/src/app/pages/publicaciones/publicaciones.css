@@ -275,9 +275,9 @@
   padding: 28px 60px 60px;
   scrollbar-width: thin;
   scrollbar-color: var(--sw-bg-light) transparent;
-  --tile-w: 560px;
-  --tile-h: 620px;
-  --cover-h: 315px;
+  --tile-w: 360px;
+  --tile-h: 520px;
+  --cover-h: 300px;
 }
 
 .home-carril::-webkit-scrollbar {
@@ -346,6 +346,22 @@
   font-size: 13px;
 }
 
+/* footer al pie: imagen centrada a su tamaño real, sin estirar */
+.home-footer {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.home-footer-img {
+  width: 100%;
+  max-width: auto;
+  height: 280px;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
 /* responsive */
 @media (max-width: 720px) {
   .home-top {
@@ -390,14 +406,19 @@
     padding: 20px 18px 40px;
     gap: 16px;
     /* tiles mas chicos en mobile asi entran y se ven bien en pantalla angosta */
-    --tile-w: 350px;
-    --tile-h: 430px;
-    --cover-h: 175px;
+    --tile-w: 300px;
+    --tile-h: 530px;
+    --cover-h: 275px;
   }
 
-  /* el boton "cargar mas" tambien debe achicarse en mobile */
   .home-mas {
     width: 140px;
     height: 160px;
+  }
+
+  .home-footer-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
   }
 }
