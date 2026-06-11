@@ -377,13 +377,13 @@
 }
 
 .dash-badge {
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--nintendo-red);
-  border: 1px solid var(--nintendo-red);
-  border-radius: 999px;
+  border: 2px solid var(--nintendo-red);
+  border-radius: 8px;
   padding: 1px 7px;
 }
 
@@ -398,7 +398,7 @@
 .dash-pill {
   font-size: 0.72rem;
   font-weight: 700;
-  border-radius: 999px;
+  border-radius: 10px;
   padding: 3px 10px;
   white-space: nowrap;
 }
@@ -440,7 +440,7 @@
 }
 
 .dash-vos {
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   color: var(--sw-text-muted);
   font-style: italic;
 }
