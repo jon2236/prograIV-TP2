@@ -8,11 +8,15 @@ import { PublicacionesService } from '../../services/publicaciones.service';
 import { ComentariosService } from '../../services/comentarios.service';
 import { ComentarioConAutor, Publicacion } from '../../models/publicacion.model';
 import { LogoutButton } from '../../components/logout-button/logout-button';
+import { TiempoRelativoPipe } from '../../pipes/tiempo-relativo.pipe';
+import { InicialPipe } from '../../pipes/inicial.pipe';
+import { AutofocusDirective } from '../../directives/autofocus.directive';
+import { ResaltarDirective } from '../../directives/resaltar.directive';
 
 @Component({
   selector: 'app-publicacion-detalle',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, LogoutButton],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, LogoutButton, TiempoRelativoPipe, InicialPipe, AutofocusDirective, ResaltarDirective],
   templateUrl: './publicacion-detalle.html',
   styleUrl: './publicacion-detalle.css'
 })
@@ -47,7 +51,6 @@ export class PublicacionDetalle implements OnInit {
   currentUserId = computed(() => this.user?._id ?? '');
   // admin puede borrar la publi aunque no sea suya
   esAdmin = this.user?.perfil === 'administrador';
-  inicial = (this.user?.nombre[0] ?? '?').toUpperCase();
 
   // form para escribir un comentario nuevo
   texto = new FormControl('', [Validators.required, Validators.maxLength(500)]);
@@ -220,22 +223,6 @@ export class PublicacionDetalle implements OnInit {
   // vuelve al feed
   volver(): void {
     this.router.navigate(['/publicaciones']);
-  }
-
-  // string tipo "hace 2h" para la fecha del comentario
-  tiempoRelativo(fecha: string): string {
-    const ms = Date.now() - new Date(fecha).getTime();
-    const min = Math.floor(ms / 60000);
-    const hr = Math.floor(min / 60);
-    const dia = Math.floor(hr / 24);
-    if (dia >= 1) return `hace ${dia}d`;
-    if (hr >= 1) return `hace ${hr}h`;
-    if (min >= 1) return `hace ${min}m`;
-    return 'ahora';
-  }
-
-  inicialDe(c: ComentarioConAutor): string {
-    return (c.autor.nombre[0] ?? '?').toUpperCase();
   }
 
   private errorModal(err: { error?: { message?: string | string[] } }, fallback: string): void {

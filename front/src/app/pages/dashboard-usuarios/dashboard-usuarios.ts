@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { User } from '../../models/user.model';
 import { LogoutButton } from '../../components/logout-button/logout-button';
+import { InicialPipe } from '../../pipes/inicial.pipe';
 import { strongPasswordValidator } from '../../validators/password.validator';
 import { passwordMatchValidator } from '../../validators/password-match.validator';
 import { pastDateValidator } from '../../validators/past-date.validator';
@@ -20,7 +21,7 @@ const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 @Component({
   selector: 'app-dashboard-usuarios',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, LogoutButton],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, LogoutButton, InicialPipe],
   templateUrl: './dashboard-usuarios.html',
   styleUrl: './dashboard-usuarios.css'
 })
@@ -218,10 +219,6 @@ export class DashboardUsuarios implements OnInit {
   // reemplazo el user en la lista por el q vuelve del back con el habilitado nuevo
   private reemplazar(actualizado: User): void {
     this.usuarios.update((arr) => arr.map((u) => (u._id === actualizado._id ? actualizado : u)));
-  }
-
-  inicialDe(u: User): string {
-    return (u.nombre[0] ?? '?').toUpperCase();
   }
 
   private errorModal(err: { error?: { message?: string | string[] } }, fallback: string): void {

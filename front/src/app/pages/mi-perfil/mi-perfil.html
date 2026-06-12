@@ -21,7 +21,7 @@
         @if (user?.imagenPerfil) {
           <img [src]="user!.imagenPerfil" alt="" />
         } @else {
-          <span>{{ inicial() }}</span>
+          <span>{{ user?.nombre | inicial }}</span>
         }
       </span>
       <span class="menu-perfil-text">Feed</span>
@@ -36,7 +36,7 @@
           @if (user.imagenPerfil) {
             <img class="perfil-foto" [src]="user.imagenPerfil" alt="Foto de perfil" />
           } @else {
-            <div class="perfil-foto perfil-foto-vacia">{{ inicial() }}</div>
+            <div class="perfil-foto perfil-foto-vacia">{{ user.nombre | inicial }}</div>
           }
 
           <div class="perfil-info">

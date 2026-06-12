@@ -34,7 +34,7 @@
           @if (p.autor.imagenPerfil) {
             <img class="publi-avatar" [src]="p.autor.imagenPerfil" alt="" />
           } @else {
-            <div class="publi-avatar publi-avatar-vacio">{{ p.autor.nombre.charAt(0).toUpperCase() }}</div>
+            <div class="publi-avatar publi-avatar-vacio">{{ p.autor.nombre | inicial }}</div>
           }
           <div class="publi-autor-info">
             <span class="publi-nombre">{{ p.autor.nombre }} {{ p.autor.apellido }}</span>
@@ -69,7 +69,7 @@
             <span>{{ p.likesCount }}</span>
           </button>
 
-          <span class="publi-fecha">{{ tiempoRelativo(p.createdAt) }}</span>
+          <span class="publi-fecha">{{ p.createdAt | tiempoRelativo }}</span>
         </footer>
       </div>
     </article>
@@ -112,13 +112,14 @@
               @if (c.autor.imagenPerfil) {
                 <img class="coment-avatar" [src]="c.autor.imagenPerfil" alt="" />
               } @else {
-                <div class="coment-avatar coment-avatar-vacio">{{ inicialDe(c) }}</div>
+                <div class="coment-avatar coment-avatar-vacio">{{ c.autor.nombre | inicial }}</div>
               }
 
-              <div class="coment-body">
+              <!-- appResaltar: highlight al pasar el mouse, color mas claro q el fondo del body -->
+              <div class="coment-body" appResaltar="rgba(230,0,18,0.15)">
                 <div class="coment-head">
                   <span class="coment-user">{{ '@' + c.autor.nombreUsuario }}</span>
-                  <span class="coment-fecha">{{ tiempoRelativo(c.createdAt) }}</span>
+                  <span class="coment-fecha">{{ c.createdAt | tiempoRelativo }}</span>
                   @if (c.modificado) {
                     <span class="coment-editado">(editado)</span>
                   }
@@ -129,6 +130,7 @@
                   <textarea
                     class="coment-input coment-input-edit"
                     [formControl]="editTexto"
+                    appAutofocus
                     maxlength="500"
                     rows="2"
                   ></textarea>

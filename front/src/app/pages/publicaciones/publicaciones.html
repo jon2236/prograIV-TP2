@@ -22,7 +22,7 @@
           @if (user?.imagenPerfil) {
             <img [src]="user!.imagenPerfil" alt="" />
           } @else {
-            <span>{{ inicial }}</span>
+            <span>{{ user?.nombre | inicial }}</span>
           }
         </span>
         <span class="menu-perfil-text">Mi perfil</span>
