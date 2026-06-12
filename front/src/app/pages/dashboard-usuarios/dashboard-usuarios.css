@@ -87,6 +87,7 @@
   border: 1px solid var(--sw-tile-border);
   border-radius: 14px;
   padding: 22px;
+  min-width: 0;
 }
 
 .dash-card-titulo {
@@ -110,7 +111,7 @@
 /* form */
 .grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
 }
 
@@ -119,6 +120,7 @@
   flex-direction: column;
   gap: 6px;
   margin-bottom: 14px;
+  min-width: 0;
 }
 
 .field label {
@@ -135,6 +137,9 @@
 
 .field input,
 .field textarea {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   background: var(--sw-bg-light);
   border: 1px solid var(--sw-tile-border);
   border-radius: 8px;
@@ -462,12 +467,35 @@
     padding-right: 18px;
   }
 
+}
+
+/* celulares: apilo los pares de inputs y acomodo cada fila de usuario en 2 lineas */
+@media (max-width: 560px) {
+  .dash-grid {
+    gap: 16px;
+    padding: 16px 14px 36px;
+  }
+
+  .dash-card {
+    padding: 16px;
+  }
+
+  /* los pares de campos pasan a una sola columna asi no se aplastan */
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* fila de usuario: avatar + datos en la primer linea, estado + accion abajo */
   .dash-user {
     flex-wrap: wrap;
+    gap: 8px 12px;
   }
 
   .dash-user-info {
-    flex: 1 1 100%;
-    order: 1;
+    flex: 1 1 calc(100% - 56px);
+  }
+
+  .dash-user-accion {
+    margin-left: auto;
   }
 }
