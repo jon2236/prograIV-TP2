@@ -235,7 +235,7 @@
               @if (u.imagenPerfil) {
                 <img class="dash-avatar" [src]="u.imagenPerfil" alt="" />
               } @else {
-                <div class="dash-avatar dash-avatar-vacio">{{ inicialDe(u) }}</div>
+                <div class="dash-avatar dash-avatar-vacio">{{ u.nombre | inicial }}</div>
               }
 
               <div class="dash-user-info">

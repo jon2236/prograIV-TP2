@@ -482,6 +482,7 @@
   border: 1px solid var(--sw-tile-border);
   border-radius: var(--sw-tile-radius);
   padding: 12px 16px;
+  transition: background 0.15s ease;
 }
 
 .coment-head {

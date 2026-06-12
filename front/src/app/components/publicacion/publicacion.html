@@ -18,7 +18,7 @@
       </button>
     }
 
-    <span class="tile-tiempo">{{ tiempoRelativo() }}</span>
+    <span class="tile-tiempo">{{ p.createdAt | tiempoRelativo }}</span>
   </div>
 
   <div class="tile-cuerpo">
@@ -33,7 +33,7 @@
       @if (p.autor.imagenPerfil) {
         <img class="tile-avatar" [src]="p.autor.imagenPerfil" alt="" />
       } @else {
-        <div class="tile-avatar tile-avatar-vacio">{{ inicial() }}</div>
+        <div class="tile-avatar tile-avatar-vacio">{{ p.autor.nombre | inicial }}</div>
       }
       <span class="tile-username">{{ '@' + p.autor.nombreUsuario }}</span>
     </div>

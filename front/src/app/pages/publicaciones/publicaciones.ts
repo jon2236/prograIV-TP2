@@ -7,11 +7,12 @@ import { PublicacionesService } from '../../services/publicaciones.service';
 import { Publicacion } from '../../models/publicacion.model';
 import { PublicacionComponent } from '../../components/publicacion/publicacion';
 import { LogoutButton } from '../../components/logout-button/logout-button';
+import { InicialPipe } from '../../pipes/inicial.pipe';
 
 @Component({
   selector: 'app-publicaciones',
   standalone: true,
-  imports: [CommonModule, RouterLink, PublicacionComponent, LogoutButton],
+  imports: [CommonModule, RouterLink, PublicacionComponent, LogoutButton, InicialPipe],
   templateUrl: './publicaciones.html',
   styleUrl: './publicaciones.css'
 })
@@ -40,9 +41,6 @@ export class Publicaciones implements OnInit, OnDestroy {
   currentUserId = computed(() => this.user?._id ?? '');
   // si es admin le habilito el boton eliminar en cualquier publi
   esAdmin = this.user?.perfil === 'administrador';
-
-  // inicial del nombre del user para el avatar fallback cuando no subio foto
-  inicial = (this.user?.nombre[0] ?? '?').toUpperCase();
 
   // hora para mostrar a la derecha del menu, refresco cada minuto
   hora = signal(this.formatearHora(new Date()));

@@ -7,11 +7,12 @@ import { PublicacionesService } from '../../services/publicaciones.service';
 import { Publicacion } from '../../models/publicacion.model';
 import { PublicacionComponent } from '../../components/publicacion/publicacion';
 import { LogoutButton } from '../../components/logout-button/logout-button';
+import { InicialPipe } from '../../pipes/inicial.pipe';
 
 @Component({
   selector: 'app-mi-perfil',
   standalone: true,
-  imports: [CommonModule, RouterLink, PublicacionComponent, LogoutButton],
+  imports: [CommonModule, RouterLink, PublicacionComponent, LogoutButton, InicialPipe],
   templateUrl: './mi-perfil.html',
   styleUrl: './mi-perfil.css'
 })
@@ -26,9 +27,6 @@ export class MiPerfil implements OnInit, OnDestroy {
   // ultimas 3 publis del user
   misPublicaciones = signal<Publicacion[]>([]);
   loading = signal(false);
-
-  // primer letra para el avatar fallback cuando no subio foto
-  inicial = computed(() => (this.user?.nombre[0] ?? '?').toUpperCase());
 
   // fecha de nacimiento en formato legible (ej "16 de agosto de 1995")
   fechaFormateada = computed(() => {
