@@ -1,0 +1,67 @@
+<div class="dash">
+  <!-- topbar igual q el resto -->
+  <header class="dash-top">
+    <a routerLink="/publicaciones" class="dash-brand">
+      <svg width="28" height="28" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="2" y="6" width="36" height="28" rx="6" fill="none" stroke="currentColor" stroke-width="3" />
+        <circle cx="12" cy="20" r="3.5" fill="currentColor" />
+        <circle cx="28" cy="20" r="3.5" fill="currentColor" />
+        <rect x="18" y="14" width="4" height="12" rx="1" fill="currentColor" />
+      </svg>
+      <span class="dash-brand-name">Nintendo Connect</span>
+    </a>
+    <app-logout-button />
+  </header>
+
+  <!-- volver + tabs entre las 2 pantallas del dashboard -->
+  <nav class="dash-sub">
+    <a routerLink="/publicaciones" class="dash-back">← Volver al feed</a>
+    <div class="dash-tabs">
+      <a routerLink="/dashboard/usuarios" routerLinkActive="activo" class="dash-tab">Usuarios</a>
+      <a routerLink="/dashboard/estadisticas" routerLinkActive="activo" class="dash-tab">Estadisticas</a>
+    </div>
+  </nav>
+
+  <header class="dash-hero">
+    <p class="dash-eyebrow">Panel de administracion</p>
+    <h1 class="dash-titulo">Estadisticas</h1>
+  </header>
+
+  <!-- selector de rango: las 3 stats se recalculan con estas fechas -->
+  <form class="rango" [formGroup]="rango" (ngSubmit)="cargar()">
+    <div class="rango-campo">
+      <label for="desde">Desde</label>
+      <input id="desde" type="date" [max]="hoyStr" formControlName="desde" />
+    </div>
+    <div class="rango-campo">
+      <label for="hasta">Hasta</label>
+      <input id="hasta" type="date" [max]="hoyStr" formControlName="hasta" />
+    </div>
+    <button type="submit" class="rango-btn" [disabled]="loading()">
+      {{ loading() ? 'Cargando…' : 'Aplicar' }}
+    </button>
+  </form>
+
+  <div class="graficos">
+    <section class="grafico-card">
+      <h2 class="grafico-titulo">Publicaciones por usuario</h2>
+      <div class="grafico-box">
+        <canvas baseChart [type]="'bar'" [data]="publisData()" [options]="barOptions"></canvas>
+      </div>
+    </section>
+
+    <section class="grafico-card">
+      <h2 class="grafico-titulo">Comentarios por dia</h2>
+      <div class="grafico-box">
+        <canvas baseChart [type]="'line'" [data]="comentariosDiaData()" [options]="lineOptions"></canvas>
+      </div>
+    </section>
+
+    <section class="grafico-card">
+      <h2 class="grafico-titulo">Comentarios por publicacion</h2>
+      <div class="grafico-box">
+        <canvas baseChart [type]="'pie'" [data]="comentariosPubliData()" [options]="pieOptions"></canvas>
+      </div>
+    </section>
+  </div>
+</div>

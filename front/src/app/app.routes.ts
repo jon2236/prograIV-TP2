@@ -47,5 +47,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/dashboard-usuarios/dashboard-usuarios').then((m) => m.DashboardUsuarios)
   },
+  {
+    // estadisticas con graficos, mismo par de guards q usuarios
+    path: 'dashboard/estadisticas',
+    canActivate: [authGuard, adminGuard],
+    loadComponent: () =>
+      import('./pages/dashboard-estadisticas/dashboard-estadisticas').then(
+        (m) => m.DashboardEstadisticas
+      )
+  },
   { path: '**', redirectTo: '' }
 ];

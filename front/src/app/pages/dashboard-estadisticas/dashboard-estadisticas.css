@@ -1,0 +1,222 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.dash {
+  min-height: 100vh;
+  background: var(--sw-bg);
+  color: var(--sw-text);
+  display: flex;
+  flex-direction: column;
+}
+
+/* topbar */
+.dash-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 32px;
+  background: var(--sw-topbar);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.dash-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--nintendo-red);
+  text-decoration: none;
+}
+
+.dash-brand-name {
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--sw-text);
+}
+
+/* sub-nav: volver + tabs */
+.dash-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 32px 0;
+}
+
+.dash-back {
+  color: var(--sw-text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.15s ease;
+}
+
+.dash-back:hover {
+  color: var(--nintendo-red);
+}
+
+.dash-tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--sw-bg-elevated);
+  border-radius: 10px;
+  padding: 4px;
+}
+
+.dash-tab {
+  padding: 7px 16px;
+  border-radius: 7px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--sw-text-muted);
+  text-decoration: none;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.dash-tab:hover {
+  color: var(--sw-text);
+}
+
+.dash-tab.activo {
+  background: var(--nintendo-red);
+  color: #fff;
+}
+
+/* hero */
+.dash-hero {
+  padding: 20px 32px 8px;
+}
+
+.dash-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--nintendo-red);
+  margin: 0 0 6px;
+}
+
+.dash-titulo {
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+/* selector de rango */
+.rango {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 16px 32px 0;
+}
+
+.rango-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rango-campo label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--sw-text-muted);
+}
+
+.rango-campo input {
+  background: var(--sw-bg-light);
+  border: 1px solid var(--sw-tile-border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: var(--sw-text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.rango-campo input:focus {
+  outline: none;
+  border-color: var(--nintendo-red);
+}
+
+.rango-btn {
+  background: var(--nintendo-red);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.rango-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.rango-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* grilla de graficos */
+.graficos {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 20px;
+  padding: 24px 32px 48px;
+  align-items: start;
+}
+
+.grafico-card {
+  min-width: 0;
+  background: var(--sw-bg-elevated);
+  border: 1px solid var(--sw-tile-border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.grafico-titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 16px;
+}
+
+/* el box le da altura fija al canvas, chart.js lo llena (maintainAspectRatio:false) */
+.grafico-box {
+  position: relative;
+  height: 300px;
+}
+
+.grafico-box canvas {
+  max-width: 100%;
+}
+
+/* responsive */
+@media (max-width: 560px) {
+  .dash-top {
+    padding: 12px 18px;
+  }
+
+  .dash-sub,
+  .dash-hero,
+  .rango {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .graficos {
+    padding: 20px 18px 40px;
+  }
+
+  .rango-campo {
+    flex: 1;
+  }
+}

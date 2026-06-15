@@ -16,7 +16,7 @@ export interface User {
   habilitado?: boolean;
 }
 
-// lo q mando al back para crear un usuario desde el dashboard admin (incluye perfil elegible)
+// lo q mando al back para crear un usuario desde el dashboard admin
 export interface CrearUsuarioPayload {
   nombre: string;
   apellido: string;

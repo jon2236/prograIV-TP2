@@ -10,7 +10,7 @@ export interface AutorPoblado {
   imagenPerfil?: string;
 }
 
-// subdoc embebido, en sprint 2 siempre llega vacio despues lo armo para sp3
+//mi subdoc embebido
 export interface Comentario {
   _id: string;
   texto: string;
@@ -54,13 +54,13 @@ export interface Publicacion {
   habilitado: boolean;
   createdAt: string;
   updatedAt: string;
-  //aca esto es clave no te olvidesssss!! campos calculados en el back, no estan en el schema
+  //aca esto es clave no olvidarmeeeee!! campos calculados en el back, no estan en el schema
   likesCount: number;
   isLiked: boolean;
 }
 
 // lo q mando al back para crear una publi
-// la imagen va como File aparte porq usamos formdata
+// la imagen va como File aparte porq uso formdata
 export interface CrearPublicacionPayload {
   titulo: string;
   descripcion: string;

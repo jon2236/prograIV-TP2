@@ -2,7 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 import { UsuariosService } from '../../services/usuarios.service';
@@ -21,7 +21,7 @@ const ACCEPTED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 @Component({
   selector: 'app-dashboard-usuarios',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, LogoutButton, InicialPipe],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, RouterLinkActive, LogoutButton, InicialPipe],
   templateUrl: './dashboard-usuarios.html',
   styleUrl: './dashboard-usuarios.css'
 })
