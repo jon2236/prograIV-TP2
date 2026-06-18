@@ -50,7 +50,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  // POST /users, alta desde el dashboard, perfil elegible (usuario o admin)
+  // POST /users, alta desde el dashboard, perfil elegible usuario o admin
   // mismos datos q el registro, imagen opcional en el campo imagenPerfil
   @Post()
   @UseGuards(AdminGuard)

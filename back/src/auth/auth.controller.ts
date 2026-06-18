@@ -44,7 +44,7 @@ export class AuthController {
   }
 
   // GET /auth/me devuelve el payload del token, probndo guard
-  // este me sirve tambien en sprint 3 lo meto en la pantalla /cargando q valida el token al inicio
+  // este lo meto en la pantalla /cargando q valida el token al inicio
   @Get('me')
   @UseGuards(AuthGuard)
   me(@Req() req: RequestConUser) {

@@ -189,7 +189,7 @@
   margin: 0 0 16px;
 }
 
-/* el box le da altura fija al canvas, chart.js lo llena (maintainAspectRatio:false) */
+/* el box le da altura fija al canvas, chart.js lo llena */
 .grafico-box {
   position: relative;
   height: 300px;
